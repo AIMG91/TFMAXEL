@@ -1,0 +1,31 @@
+# Base scientific stack
+numpy==1.24.4
+pandas==2.0.3
+scipy==1.10.1
+
+# Visualization
+matplotlib==3.7.5
+seaborn==0.12.2
+
+# ML utilities
+scikit-learn==1.2.2
+
+# Classical time-series w/ exogenous
+statsmodels==0.14.1
+
+# Prophet (optional; Windows wheels vary)
+prophet==1.1.5
+
+# Deep learning (choose ONE backend; PyTorch recommended)
+# torch / torchvision are best installed following PyTorch's official selector for your CUDA/CPU.
+# Keep them unpinned here to avoid Windows install conflicts.
+
+# GluonTS (optional; often pins numpy/pandas; may require version adjustments)
+# gluonts
+
+# Notebooks
+jupyter==1.0.0
+ipykernel==6.29.5
+
+# Utilities
+tqdm==4.66.4

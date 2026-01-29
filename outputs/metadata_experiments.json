@@ -1,0 +1,33 @@
+{
+  "seed": 42,
+  "exog_cols": [
+    "Holiday_Flag",
+    "Temperature",
+    "Fuel_Price",
+    "CPI",
+    "Unemployment"
+  ],
+  "lags": [
+    1,
+    2,
+    4,
+    8,
+    52
+  ],
+  "rollings": [
+    4,
+    8,
+    12
+  ],
+  "lookback": 52,
+  "test_weeks": 39,
+  "libs": {
+    "numpy": "1.24.4",
+    "pandas": "2.0.3",
+    "statsmodels": "0.14.1",
+    "prophet": "1.2.2",
+    "gluonts": "0.13.3",
+    "torch": "2.4.1"
+  },
+  "oracle_exog_assumption": "All exogenous covariates are assumed available over the forecast horizon (oracle scenario)."
+}

@@ -1,0 +1,33 @@
+# Python
+.venv/
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*.pyd
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# OS / Editor
+.DS_Store
+Thumbs.db
+.vscode/
+
+# Training logs / checkpoints
+notebooks/lightning_logs/
+**/lightning_logs/
+*.ckpt
+*.pth
+*.pt
+
+# Outputs: keep figures/metrics in git, ignore heavy artifacts
+outputs/experiments/
+outputs/predictions/
+outputs/**/checkpoints/
+outputs/**/wandb/
+
+# Optional: uncomment if you prefer ALL outputs go to S3
+# outputs/
