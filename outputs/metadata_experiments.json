@@ -25,9 +25,9 @@
     "numpy": "1.24.4",
     "pandas": "2.0.3",
     "statsmodels": "0.14.1",
-    "prophet": "1.2.2",
-    "gluonts": "0.13.3",
-    "torch": "2.4.1"
+    "prophet": "1.1.5",
+    "gluonts": "0.16.2",
+    "torch": "2.5.1"
   },
   "oracle_exog_assumption": "All exogenous covariates are assumed available over the forecast horizon (oracle scenario)."
 }
