@@ -67,7 +67,16 @@ class LSTMForecaster(BaseForecaster):
 
         self._feature_cols = list(feature_cols)
 
-        self._lookback = int(config.get("lookback", 52))
+        requested_lookback = int(config.get("lookback", 52))
+        max_lookback = max(1, len(train_df))
+        effective_lookback = min(requested_lookback, max_lookback)
+        if effective_lookback < requested_lookback:
+            print(
+                f"[LSTM] Reducing lookback from {requested_lookback} to {effective_lookback}"
+                f" due to limited training rows ({len(train_df)} after dropna)."
+            )
+
+        self._lookback = effective_lookback
         self._train_mean = float(train_df["Weekly_Sales"].mean())
 
         self._scaler_x = StandardScaler()
@@ -77,7 +86,9 @@ class LSTMForecaster(BaseForecaster):
 
         X_train, y_train = self._build_sequences(train_df, self._feature_cols, self._lookback)
         if len(X_train) == 0:
-            raise ValueError("Not enough data to build LSTM sequences (check lookback / feature NaNs).")
+            raise ValueError(
+                "Not enough data to build LSTM sequences (check lookback / feature NaNs / data length)."
+            )
 
         train_loader = DataLoader(
             TensorDataset(
