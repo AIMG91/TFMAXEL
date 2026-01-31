@@ -68,12 +68,20 @@ class LSTMForecaster(BaseForecaster):
         self._feature_cols = list(feature_cols)
 
         requested_lookback = int(config.get("lookback", 52))
-        max_lookback = max(1, len(train_df))
-        effective_lookback = min(requested_lookback, max_lookback)
+
+        # Align lookback to the shortest store history so sequences exist for every store.
+        store_lengths = [len(g) for _, g in train_df.groupby("Store")]
+        if not store_lengths:
+            raise ValueError("Training dataframe has no store groups after preprocessing.")
+
+        # Need at least one step more than lookback to form a target.
+        max_valid_lookback = max(1, min(store_lengths) - 1)
+        effective_lookback = min(requested_lookback, max_valid_lookback)
+
         if effective_lookback < requested_lookback:
             print(
                 f"[LSTM] Reducing lookback from {requested_lookback} to {effective_lookback}"
-                f" due to limited training rows ({len(train_df)} after dropna)."
+                f" due to limited per-store history (min len={min(store_lengths)} after dropna)."
             )
 
         self._lookback = effective_lookback
