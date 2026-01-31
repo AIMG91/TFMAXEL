@@ -29,5 +29,32 @@ outputs/predictions/
 outputs/**/checkpoints/
 outputs/**/wandb/
 
+# Local ablation outputs (generated)
+outputs/E0_ablation/
+outputs/requirements/
+
+# LaTeX build artifacts (generated)
+Plantilla de memoria/*.aux
+Plantilla de memoria/*.bbl
+Plantilla de memoria/*.bcf
+Plantilla de memoria/*.blg
+Plantilla de memoria/*.fdb_latexmk
+Plantilla de memoria/*.fls
+Plantilla de memoria/*.glg
+Plantilla de memoria/*.glo
+Plantilla de memoria/*.gls
+Plantilla de memoria/*.idx
+Plantilla de memoria/*.ilg
+Plantilla de memoria/*.ind
+Plantilla de memoria/*.ist
+Plantilla de memoria/*.lof
+Plantilla de memoria/*.log
+Plantilla de memoria/*.lot
+Plantilla de memoria/*.out
+Plantilla de memoria/*.run.xml
+Plantilla de memoria/*.synctex.gz
+Plantilla de memoria/*.toc
+Plantilla de memoria/*.xdy
+
 # Optional: uncomment if you prefer ALL outputs go to S3
 # outputs/
