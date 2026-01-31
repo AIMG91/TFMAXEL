@@ -20,6 +20,7 @@ class TransformerForecaster(BaseForecaster):
         self._lookback: int = 52
         self._train_mean: float = 0.0
         self._device = None
+        self._warned_lookback: bool = False
 
     def _build_sequences(
         self, df_in: pd.DataFrame, feature_cols: List[str], lookback: int
@@ -66,7 +67,25 @@ class TransformerForecaster(BaseForecaster):
 
         self._feature_cols = list(feature_cols)
 
-        self._lookback = int(config.get("lookback", 52))
+        requested_lookback = int(config.get("lookback", 52))
+
+        # Align lookback to the shortest store history so sequences exist for every store.
+        store_lengths = [len(g) for _, g in train_df.groupby("Store")]
+        if not store_lengths:
+            raise ValueError("Training dataframe has no store groups after preprocessing.")
+
+        # Need at least one step more than lookback to form a target.
+        max_valid_lookback = max(1, min(store_lengths) - 1)
+        effective_lookback = min(requested_lookback, max_valid_lookback)
+
+        if (effective_lookback < requested_lookback) and (not self._warned_lookback) and (not config.get("suppress_lookback_warning", False)):
+            print(
+                f"[Transformer] Reducing lookback from {requested_lookback} to {effective_lookback}"
+                f" due to limited per-store history (min len={min(store_lengths)} after dropna)."
+            )
+            self._warned_lookback = True
+
+        self._lookback = effective_lookback
         self._train_mean = float(train_df["Weekly_Sales"].mean())
 
         self._scaler_x = StandardScaler()
