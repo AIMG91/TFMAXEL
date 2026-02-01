@@ -5,13 +5,19 @@
 \chapter{Objetivos}
 \label{objetivos}
 
-Describe aquí el objetivo general de tu Trabajo Fin de Máster y, a continuación, define los objetivos parciales:
-\medskip
+\section{Objetivo general}
+Dise\~nar y evaluar un sistema de predicci\'on de ventas semanales por tienda que integre variables ex\'ogenas y permita comparar, bajo un protocolo com\'un y reproducible, modelos estad\'isticos y de aprendizaje profundo.
+
+\section{Objetivos espec\'ificos}
 \begin{enumerate}[label=\destacado{\arabic*.}]
   \setlength\itemsep{1em}
-  \item \textbf{Objetivo parcial 1.}
+  \item \textbf{Definir un protocolo experimental temporal} (particiones, horizonte y m\'etricas) que evite fuga de informaci\'on y permita comparar modelos de manera justa.
 
-  \item \textbf{Objetivo parcial 2.}
+  \item \textbf{Implementar y entrenar modelos con capacidad de covariables ex\'ogenas}, incluyendo \acrshort{sarimax}, Prophet, DeepAR, \acrshort{lstm} y Transformer.
 
-  \item \textbf{Objetivo parcial 3.}
+  \item \textbf{Evaluar el rendimiento global y por tienda} utilizando \acrshort{mae}, \acrshort{rmse} y \acrshort{smape}, identificando patrones de error y casos de fallo.
+
+  \item \textbf{Analizar la robustez} del sistema ante series cortas y ante cambios estructurales relacionados con un choque econ\'omico.
+
+  \item \textbf{Documentar las conclusiones} y proponer mejoras para un despliegue m\'as realista (disponibilidad de covariables, recalibraci\'on y detecci\'on de drift).
 \end{enumerate}

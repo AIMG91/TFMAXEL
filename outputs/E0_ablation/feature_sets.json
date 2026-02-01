@@ -1,0 +1,76 @@
+{
+  "FS0": {
+    "add_calendar": false,
+    "exog_cols": [],
+    "feature_cols": [
+      "lag_1",
+      "lag_2",
+      "lag_4",
+      "lag_8",
+      "lag_52",
+      "roll_mean_4",
+      "roll_std_4",
+      "roll_mean_8",
+      "roll_std_8",
+      "roll_mean_12",
+      "roll_std_12"
+    ],
+    "notes": "Target-history only: lags + rolling stats"
+  },
+  "FS1": {
+    "add_calendar": true,
+    "exog_cols": [],
+    "feature_cols": [
+      "lag_1",
+      "lag_2",
+      "lag_4",
+      "lag_8",
+      "lag_52",
+      "roll_mean_4",
+      "roll_std_4",
+      "roll_mean_8",
+      "roll_std_8",
+      "roll_mean_12",
+      "roll_std_12",
+      "weekofyear",
+      "month",
+      "year"
+    ],
+    "notes": "FS0 + calendar (weekofyear, month, year)"
+  },
+  "FS2": {
+    "add_calendar": true,
+    "exog_cols": [
+      "Holiday_Flag",
+      "Temperature",
+      "Fuel_Price",
+      "CPI",
+      "Unemployment"
+    ],
+    "feature_cols": [
+      "lag_1",
+      "lag_2",
+      "lag_4",
+      "lag_8",
+      "lag_52",
+      "roll_mean_4",
+      "roll_std_4",
+      "roll_mean_8",
+      "roll_std_8",
+      "roll_mean_12",
+      "roll_std_12",
+      "Holiday_Flag",
+      "Temperature",
+      "Fuel_Price",
+      "CPI",
+      "Unemployment",
+      "weekofyear",
+      "month",
+      "year"
+    ],
+    "notes": "FS1 + exogenous variables (oracle exog)"
+  },
+  "COMPLETAR": {
+    "oracle_exog_assumption": "[COMPLETAR: describe disponibilidad real de exógenas en deployment]"
+  }
+}

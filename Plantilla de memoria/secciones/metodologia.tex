@@ -4,3 +4,66 @@
 
 \chapter{Metodología}
 \label{metodologia}
+
+Este capítulo describe el protocolo experimental y las decisiones metodológicas para comparar modelos con covariables exógenas en un contexto multiserie.
+El objetivo es asegurar una evaluación \textbf{justa} y \textbf{auditable}, evitando fugas de información y documentando supuestos (especialmente sobre disponibilidad de exógenas).
+
+\section{Formulación del problema}
+Sea $y_{s,t}$ la venta semanal (\texttt{Weekly\_Sales}) de la tienda $s$ en la semana $t$.
+Dados un historial de longitud $L$ y un conjunto de covariables $\mathbf{x}_{s,t}$, se desea estimar $\hat{y}_{s,t+h}$ para $h\in\{1,\dots,H\}$.
+En la evaluación principal se toma $H=39$ semanas.
+
+\section{Partición temporal y horizonte de test}
+La evaluación se realiza respetando el orden temporal (no se mezclan observaciones futuras en entrenamiento).
+Para la comparación principal se define un tramo final de \textbf{39 semanas} (desde 2012-02-03 hasta 2012-10-26) como conjunto de test.
+De este modo, todos los modelos se comparan sobre las mismas fechas y tiendas.
+
+\section{Prevención de fuga de información (anti-leakage)}
+La fuga de información en series temporales puede ocurrir de forma sutil, especialmente al construir características o al tratar covariables exógenas.
+Para minimizar riesgos, se adoptan las siguientes reglas:
+\begin{itemize}
+  \item \textbf{Causalidad en características}: lags y estadísticos móviles del objetivo se calculan usando solo semanas $<t$.
+  \item \textbf{Aislamiento entre splits}: cualquier transformación ajustada con datos (p.~ej., escalado) se ajusta solo con entrenamiento y luego se aplica a validación/test.
+  \item \textbf{Exógenas y horizonte}: el uso de exógenas en $t+h$ requiere explicitar si dichas exógenas son conocidas a futuro (calendario) o si se asume un escenario \emph{oracle}.
+\end{itemize}
+Estas prácticas son coherentes con recomendaciones estándar de validación en forecasting \citep{hyndman2021fpp3}.
+
+\section{Características y configuración común}
+La configuración común se basa en:
+\begin{itemize}
+  \item \textbf{Exógenas}: \texttt{Holiday\_Flag}, \texttt{Temperature}, \texttt{Fuel\_Price}, \texttt{CPI}, \texttt{Unemployment}.
+  \item \textbf{Lags}: 1, 2, 4, 8, 52.
+  \item \textbf{Ventanas móviles}: 4, 8, 12.
+  \item \textbf{Calendario}: \texttt{weekofyear}, \texttt{month}, \texttt{year}.
+  \item \textbf{Lookback}: 52 semanas para modelos secuenciales globales.
+\end{itemize}
+
+\section{Diseño experimental (E1--E5)}
+Se implementan varios experimentos que cubren escenarios complementarios:
+\begin{table}[ht!]
+\centering
+\caption[Experimentos E1--E5]{\textbf{Experimentos definidos para evaluación.} En todos los casos se respetan particiones temporales y se reportan métricas globales y por tienda.}
+\label{tab:experimentos}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{llp{0.55\textwidth}}
+\toprule
+ID & Esquema & Objetivo \\
+\midrule
+E1 & Walk-forward & Evaluar despliegue con recalibración frecuente: para cada semana de test se entrena con el pasado y se predice 1 paso. \\
+E2 & Holdout final (39) & Comparación directa en un horizonte fijo de 39 semanas (2012-02-03 a 2012-10-26). \\
+E3 & \emph{Leave-one-store-out} & Medir capacidad de generalización inter-tienda en modelos globales (entrenar en todas menos una). \\
+E4 & Train-grupo / test-grupo & Robustez al transferir entre grupos: entrenar en tiendas de mayor volumen y evaluar en 10 tiendas de menor media. \\
+E5 & Shock exógeno & Sensibilidad ante cambios estructurales: perturbar desempleo en test y observar degradación relativa. \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+\noindent [COMPLETAR: indicar qué experimentos se ejecutaron completamente en el entorno de entrega y el coste computacional aproximado.]
+
+\section{Métricas}
+Se reportan \acrshort{mae}, \acrshort{rmse} y \acrshort{smape}.
+Además de las métricas globales (agregadas), se calculan métricas por tienda para caracterizar heterogeneidad y detectar series difíciles.
+
+\section{Reporte y trazabilidad}
+Las ejecuciones generan artefactos en \texttt{outputs/} (predicciones, métricas y figuras) y registran metadatos (semilla, features y librerías).
+Esta trazabilidad facilita auditar resultados y regenerar las tablas/figuras integradas en la memoria.

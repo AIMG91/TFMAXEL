@@ -2,5 +2,29 @@
 
 \cleardoublepage
 
-\chapter{Limitaciones y\\ Perspectivas de Futuro}
+\chapter{Limitaciones y Perspectivas de Futuro}
 \label{limitaciones-y-futuro}
+
+\section{Limitaciones}
+\begin{itemize}
+	\item \textbf{Disponibilidad de covariables a futuro}: parte del an\'alisis asume un escenario \emph{oracle} para ciertas variables ex\'ogenas. En un despliegue real, algunas covariables (p.~ej., indicadores macroecon\'omicos) pueden no estar disponibles con la misma antelaci\'on o pueden requerir su propia predicci\'on.
+
+	\item \textbf{Cambios de distribuci\'on}: los modelos pueden degradarse ante cambios estructurales (nuevos patrones de consumo, eventos extremos, cambios de pol\'iticas comerciales). Sin mecanismos de adaptaci\'on, el rendimiento observado en un periodo puede no extrapolar a periodos posteriores.
+
+	\item \textbf{Heterogeneidad entre tiendas}: aunque los modelos globales ayudan, existen tiendas con din\'amicas idiosincr\'aticas (rupturas, aperturas/cierres, promociones no registradas) que limitan la capacidad de generalizaci\'on.
+
+	\item \textbf{M\'etricas agregadas}: un valor global puede ocultar degradaciones severas en subconjuntos de tiendas. Es necesario acompa\~nar el an\'alisis con estad\'isticos por tienda y segmentaciones.
+\end{itemize}
+
+\section{Perspectivas de futuro}
+\begin{itemize}
+	\item \textbf{Pron\'ostico de covariables y escenario realista}: extender el sistema para predecir covariables no conocidas a futuro (o sustituirlas por variables proxy), evaluando la degradaci\'on frente al escenario \emph{oracle}.
+
+	\item \textbf{Modelos probabil\'isticos y calibraci\'on}: complementar las m\'etricas puntuales con evaluaci\'on de distribuciones predictivas (calibraci\'on, intervalos) para soportar decisi\'on bajo incertidumbre.
+
+	\item \textbf{Detecci\'on de drift y reentrenamiento}: incorporar monitorizaci\'on continua y pol\'iticas de reentrenamiento, con ventanas deslizantes y validaci\'on \emph{walk-forward} peri\'odica.
+
+	\item \textbf{Segmentaci\'on por tiendas}: entrenar modelos por cl\'uster o jer\'arquicos que exploten similitudes (zona geogr\'afica, tama\~no, perfil de ventas) para reducir heterogeneidad.
+
+	\item \textbf{Explicabilidad}: a\~nadir herramientas para analizar la contribuci\'on de covariables (p.~ej., importancias o an\'alisis de sensibilidad) y apoyar la toma de decisiones.
+\end{itemize}

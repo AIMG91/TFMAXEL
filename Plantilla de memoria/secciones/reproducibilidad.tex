@@ -1,0 +1,50 @@
+% REPRODUCIBILIDAD
+
+\cleardoublepage
+
+\chapter{Reproducibilidad y artefactos}
+\label{reproducibilidad}
+
+La reproducibilidad es un objetivo transversal del trabajo.
+Se han diseñado scripts, estructuras de salida y metadatos para que los resultados puedan regenerarse y auditarse.
+
+\section{Estructura del proyecto}
+El repositorio se organiza en:
+\begin{itemize}
+  \item \textbf{\texttt{src}}: implementación del pipeline de carga de datos, construcción de características, ejecución de experimentos y modelos.
+  \item \textbf{\texttt{scripts}}: puntos de entrada para lanzar experimentos (p.~ej., \path{run_all_experiments.py}).
+  \item \textbf{\texttt{notebooks}}: notebooks exploratorios y de entrenamiento.
+  \item \textbf{\texttt{outputs}}: predicciones, métricas, figuras y metadatos de ejecución.
+\end{itemize}
+
+\section{Metadatos y configuración}
+Los experimentos registran metadatos (semilla, columnas exógenas, lags/ventanas, lookback e información de librerías).
+En particular, se utiliza \textbf{semilla 42} para controlar, en la medida de lo posible, la aleatoriedad.
+
+\section{Ejecución de experimentos}
+La ejecución está automatizada mediante scripts.
+Para regenerar resultados, el flujo esperado es:
+\begin{enumerate}
+  \item Instalar dependencias (ver \texttt{requirements.txt}) y configurar el entorno.
+  \item Ejecutar el script de experimentos (p.~ej., \texttt{scripts/run\_all\_experiments.py}) con los parámetros deseados.
+  \item Verificar que se generan predicciones, métricas y figuras bajo \texttt{outputs/}.
+\end{enumerate}
+\noindent [COMPLETAR: comando exacto utilizado en la máquina de entrega, incluyendo argumentos y versión de CUDA/CPU si aplica.]
+
+\section{Artefactos reportados en la memoria}
+Esta memoria integra resultados mediante:
+\begin{itemize}
+  \item Figuras en \texttt{Plantilla de memoria/figuras/}.
+  \item Tablas LaTeX generadas a partir de CSV de métricas (p.~ej., \texttt{summary\_metrics.csv}).
+\end{itemize}
+\noindent [COMPLETAR: procedimiento reproducible (script) para regenerar la tabla \path{tabla_top10_metricas.tex} y la figura \path{top10_mae.png} desde los CSV.]
+
+\section{Compilación del documento}
+En Windows, la compilación se realiza con una secuencia manual robusta (sin \texttt{make}):
+\begin{enumerate}
+  \item \texttt{pdflatex memoria.tex}
+  \item \texttt{makeglossaries memoria}
+  \item \texttt{bibtex memoria}
+  \item \texttt{pdflatex memoria.tex} (dos pasadas)
+\end{enumerate}
+Este orden asegura que referencias cruzadas, bibliografía y glosarios se resuelvan correctamente.

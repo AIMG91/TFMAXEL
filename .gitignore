@@ -23,15 +23,8 @@ notebooks/lightning_logs/
 *.pth
 *.pt
 
-# Outputs: keep figures/metrics in git, ignore heavy artifacts
-outputs/experiments/
-outputs/predictions/
-outputs/**/checkpoints/
-outputs/**/wandb/
-
-# Local ablation outputs (generated)
-outputs/E0_ablation/
-outputs/requirements/
+# Outputs
+# (tracking enabled so SageMaker outputs can be committed and pulled locally)
 
 # LaTeX build artifacts (generated)
 Plantilla de memoria/*.aux

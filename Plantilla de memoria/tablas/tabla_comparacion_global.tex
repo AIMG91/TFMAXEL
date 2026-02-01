@@ -1,0 +1,20 @@
+% TABLA: COMPARACIÓN GLOBAL ENTRE FAMILIAS (CONFIGURACIÓN BASE)
+
+\begin{table}[ht!]
+\centering
+\caption[Comparación global (MAE/RMSE/sMAPE)]{\textbf{Comparación global entre modelos (configuración base).} Métricas agregadas sobre todas las tiendas y semanas del horizonte de test. Menor es mejor.}
+\label{tab:comparacion-global}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{lrrr}
+\toprule
+Modelo & MAE & RMSE & sMAPE \\
+\midrule
+DeepAR (exógenas) & 59\,573.68 & 86\,287.62 & 6.041 \\
+LSTM global (exógenas) & 75\,827.53 & 98\,575.42 & 8.016 \\
+Prophet (regresores) & 142\,509.72 & 186\,757.80 & 12.139 \\
+SARIMAX (exógenas) & 124\,157.68 & 169\,022.47 & 10.889 \\
+Transformer global (exógenas) & 113\,420.92 & 147\,263.71 & 9.863 \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}

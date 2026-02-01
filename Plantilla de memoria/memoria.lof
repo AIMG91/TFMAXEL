@@ -1,6 +1,4 @@
-\babel@toc {spanish}{}
-\addvspace {10\p@ }
-\contentsline {figure}{\numberline {1.1}{\ignorespaces Tipos de grafos}}{4}{figure.1.1}%
+\babel@toc {spanish}{}\relax 
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
@@ -8,3 +6,14 @@
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {8.1}{\ignorespaces Comparación global de métricas}}{22}{figure.8.1}%
+\contentsline {figure}{\numberline {8.2}{\ignorespaces Top 10 modelos por MAE}}{22}{figure.8.2}%
+\contentsline {figure}{\numberline {8.3}{\ignorespaces Top 5 comparaci\'on normalizada}}{23}{figure.8.3}%
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\addvspace {10\p@ }
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Distribución de errores (Transformer)}}{34}{figure.Alph2.1}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces Distribución de errores (DeepAR)}}{35}{figure.Alph2.2}%

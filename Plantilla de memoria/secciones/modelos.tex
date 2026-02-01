@@ -1,0 +1,57 @@
+% MODELOS
+
+\cleardoublepage
+
+\chapter{Modelos}
+\label{modelos}
+
+Este capítulo describe los modelos evaluados, con énfasis en cómo incorporan covariables exógenas y en qué medida permiten aprendizaje \emph{global} (multiserie) frente a aprendizaje por serie.
+
+\section{Modelos estadísticos con exógenas}
+\subsection{\texorpdfstring{\acrshort{sarimax}}{SARIMAX}}
+\acrshort{sarimax} extiende los modelos ARIMA estacionales incluyendo regresores exógenos.
+En esta memoria se utiliza como \emph{baseline} interpretable: permite modelar dependencia temporal (componentes autorregresivas y de medias móviles) y, a la vez, capturar el efecto de covariables.
+Su uso es habitual en regresión dinámica y econometría 
+\citep{box2015tsa,hyndman2021fpp3}.
+
+\subsection{Prophet con regresores}
+Prophet es un modelo aditivo que combina tendencia, estacionalidades y efectos de festivos.
+Además, permite añadir regresores externos.
+En este trabajo se emplea Prophet como alternativa robusta y de rápida calibración, especialmente útil cuando se desea interpretabilidad y un flujo de modelado ágil \citep{taylor2018forecasting}.
+
+\section{Modelos probabilísticos y de aprendizaje profundo}
+\subsection{DeepAR}
+DeepAR es un modelo autoregresivo basado en \acrshort{rnn} que aprende una distribución predictiva condicional y se ha consolidado como referencia en forecasting probabilístico multiserie.
+Su arquitectura permite incorporar covariables dinámicas (por ejemplo, exógenas por semana) \citep{flunkert2017deepar}.
+
+\subsection{\texorpdfstring{\acrshort{lstm}}{LSTM} global}
+Las redes \acrshort{lstm} \citep{hochreiter1997long} modelan dependencias de largo plazo y son una base habitual en series temporales.
+En este \acrshort{tfm} se entrena una red global sobre múltiples tiendas, de modo que el modelo comparte parámetros y puede transferir patrones entre series.
+
+\subsection{Transformer global}
+Los Transformers basados en atención \citep{vaswani2017attention} permiten modelar dependencias a largo plazo sin recurrencia explícita.
+En forecasting, su atractivo reside en la capacidad de combinar señales heterogéneas (lags, calendario y exógenas) y capturar interacciones no lineales.
+
+\section{Entrada de características y horizonte}
+Los modelos globales reciben, para cada tienda, una secuencia multivariada de longitud \textbf{lookback}.
+En la configuración principal se usa \texttt{lookback = 52} (aprox. un año), lo que permite capturar estacionalidad anual y patrones de medio plazo.
+El horizonte de predicción evaluado es de 39 semanas.
+
+\section{Regularización y consideraciones prácticas}
+En los modelos neuronales se emplea \acrshort{dropout} para reducir sobreajuste \citep{srivastava2014dropout}.
+Además, se incorporan mecanismos defensivos para evitar fallos cuando una tienda tiene historia efectiva menor que el \emph{lookback} requerido (reducción adaptativa del lookback), de forma que el entrenamiento y la inferencia sean robustos en presencia de series más cortas.
+
+\section{Escenarios de covariables (realista vs. \emph{oracle})}
+Para interpretar correctamente el valor de las exógenas, se contemplan dos escenarios conceptuales:
+\begin{itemize}
+  \item \textbf{Escenario \emph{oracle}}: se asume que todas las covariables exógenas son conocidas durante el horizonte:
+  \begin{itemize}
+    \item \texttt{Holiday\_Flag}
+    \item \texttt{Temperature}
+    \item \texttt{Fuel\_Price}
+    \item \texttt{CPI}
+    \item \texttt{Unemployment}
+  \end{itemize}
+  \item \textbf{Escenario realista}: solo se consideran covariables garantizadas (p.~ej., calendario), o bien se introduce un modelo auxiliar para anticipar exógenas.
+\end{itemize}
+En los resultados se discute explícitamente qué conclusiones dependen de la hipótesis \emph{oracle}.

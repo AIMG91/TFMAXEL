@@ -1,0 +1,185 @@
+
+
+===== PAGE 1 =====
+
+Trabajo de Fin de MásterMáster Inteligencia Artificial Abril 2025-26
+Profesor de la asignaturaMsc. Maruja Ortega F.mortega@professor.universidadviu.com
+
+
+===== PAGE 2 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Solicitud y asignación, depósito y defensav.Criteriosde evaluaciónÍndice
+2
+v.Criteriosde evaluación
+
+
+===== PAGE 3 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Solicitud y asignación, depósito y defensav.Criteriosde evaluaciónÍndice
+3
+v.Criteriosde evaluación
+
+
+===== PAGE 4 =====
+
+Descripción TFMii. Descripción TFMEl TFM debe ser un trabajo personal, original e inéditoen el que se apliquen y desarrollen las competencias y conocimientos adquiridos en el marco del Máster. El trabajo y la defensa deben mantener un carácter auténtico y, dentro de la temática seleccionada del proyecto, reflejando la autenticidad del alumno.
+4
+autenticidad del alumno.Cabe destacar que el documento escrito derivado del trabajo pasará por una herramienta de detección de plagioy si el porcentaje de plagio es mayor a un 30% no podrá defenderse
+
+===== PAGE 5 =====
+
+i. Descripción TFMPresentación Trabajo Fin de MásterCriterios de evaluación●12 ECTS; 20% de la nota del Máster●Informe del director (30%)●Tribunal: Memoria(55%) y defensa(15%) 
+5
+Tribunal: Memoria(55%) y defensa(15%) 
+
+
+===== PAGE 6 =====
+
+i. Descripción TFMPresentación Trabajo Fin de MásterCriterios de evaluación●12 ECTS; 20% de la nota del Máster●Trabajo + memoria (55%) y defensa (15%) ●Informe del director (30%)
+6
+Requisitos*:●Aprobar previamentetodaslas asignaturas para defender (incluyendo Complementos Formativos cuando aplique)*Importante: Se puede ir trabajando en el TFM aunque se haya suspendido algún crédito.
+
+
+===== PAGE 7 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Solicitud y asignación, depósito y defensav.Criteriosde evaluaciónÍndice
+7
+v.Criteriosde evaluación
+
+
+===== PAGE 8 =====
+
+ii. MODALIDADESTFM Individual TFM en “grupo” :•Se comparten objetivos generales
+8
+•Cada alumno resuelve su TFM usando técnicas diferentes•Cada alumno presenta y defiende una memoria individualoriginal y propia
+
+
+===== PAGE 9 =====
+
+1.Académico: mini tesis. a.Incluye revisión bibliográfica, propuesta de hipótesis, metodología, resultados y discusión. b.Puede haber una parte de aplicación (código e implementación) perose centranenel aspectoinvestigativo.ii. MODALIDADESTipo de TFM:
+9
+implementación) perose centranenel aspectoinvestigativo.c.La perspectiva de este tipo de TFM es fundamentalmenteteórica, por lo que las fuentes de información son de vital importancia.
+
+
+===== PAGE 10 =====
+
+1. Académico: mini tesis. a.Incluye revisión bibliográfica, propuesta de hipótesis, metodología, resultados y discusión. b.Puede haber una parte de aplicación (código e implementación) pero se centran enel aspecto investigativo.c.La perspectiva de este tipo de TFM es fundamentalmente teórica, por lo que las fuentes de información son de vital importancia.ii. MODALIDADESTipo de TFM:
+10
+2.Aplicadoa un problema en la industria:a.El proyecto es más de implementación. Consiste en aplicar la teoría a un caso práctico concreto.b.Se requiere que haya revisión de la literatura, aunque está más dedicadoa la implementación de nuevas aproximaciones, comparaciones con enfoques anteriores o aplicación a nuevos problemas concretos.
+
+
+===== PAGE 11 =====
+
+i Descripción TFMContenido del TFMLa Memoria del TFM  se debe realizar en castellano y debe contener los siguientes apartados:–Título, autor, tutor/es, fecha, nombre del Máster y logo de VIU.–Resumen/Abstract: Consistente en una breve descripción (de 250 a 300 palabras c/u) del trabajo a realizar y resultados obtenidos.–Índice–Objetivos
+11
+–Objetivos–Marco teórico y estado del arte –Desarrollo del Proyecto: Descripción del problema, solución propuesta, metodología y su aplicación al problema–Resultados :  Valoración y discusión de los resultados.–Conclusiones y desarrollos futuros–Referencias bibliográficas
+
+===== PAGE 12 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Solicitud y asignación, depósito y defensav.Criteriosde evaluaciónRoles y Responsabilidades
+12
+v.Criteriosde evaluación
+
+
+===== PAGE 13 =====
+
+1.Estudiante2.Director TFM (o Tutor)3.Profesor de la asignatura (Coordinador TFM)4.Miembros tribunal TFMRoles y responsabilidadesCuatro roles
+13
+
+
+===== PAGE 14 =====
+
+1. Estudiante•Reuniones periódicas con el supervisor*•Trabajo independiente•Revisar bibliografía relativa a métodos y tecnicas aplicadas al problemaRoles y responsabilidadesCuatro roles
+14
+*Importate: contactar con el director para la primera reunión tras la asignación del TFM¿Con quién debe contactar según para qué?•Contenidos / temática → director TFM•Administración / problemas con director TFM → profesor de la asignatura(mortega@professor.universidadviu.com)
+
+
+===== PAGE 15 =====
+
+2. Director TFM•Proponer aproximaciones y soluciones•Orientar el proyecto a nivel técnico•Proporcionar feedback sobre el borrador de la memoria•Proporcionarfeedback sobreenfoquescuyaRoles y responsabilidadesCuatro roles
+15
+•Proporcionarfeedback sobreenfoquescuyaimplementación es de alta complejidad (en ningún caso a nivel de programación). •No desarrollo de código•No corrección de código
+
+
+===== PAGE 16 =====
+
+3. Profesor/Coordinador de la asignatura•Comprobar contacto director-alumno•Recordar fechas•Realizar la asignación de temas•AtenderconsultasAdministracióncurso/TutoresRoles y responsabilidadesCuatro roles
+16
+•AtenderconsultasAdministracióncurso/Tutores( en los correos favor utilizar el encabezado:        09MIAR_04_A_2025-26 - *Asunto*para identificar y atender adecuadamente las consultas)-------•Gestionar administración de la Defensa
+
+
+===== PAGE 17 =====
+
+4. Miembro tribunal TFM•Evaluar memoria•Evaluar defensa•Rellenar rúbricas•Emitircalificaciónfinal del TFMRoles y responsabilidadesCuatro roles
+17
+•Emitircalificaciónfinal del TFM
+
+
+===== PAGE 18 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Solicitud y asignación, depósito y defensav.Criteriosde evaluaciónÍndice
+18
+v.Criteriosde evaluación
+
+
+===== PAGE 19 =====
+
+Solicitud y AsignaciónSolicitary AsignarDepositarDefenderSe publicará una lista de posibles proyectos de TFM en la sección de “Recursos y materiales” y se notificará a través de un anuncio en el Aula, además de por correo electrónico. Los estudiantes deberán responder a un formulario a través de Google Drive indicando las 5 opciones preferenciales de TFM, acorde con los temas de la lista anterior. Los proyectos se asignarán por orden de petición (en la medida de lo posible).
+19
+En el caso de que los 5 temas elegidos por un alumno ya hayan sido asignados a otros estudiantes, se volverá a contactar con el alumno en cuestión para que vuelva a seleccionar otras 3 opciones de TFM. Alternativamente, los estudiantes podrán proponer temas “propios”, mediante el formulario que queigualmente se habilitará para tal fin, indicando adicionalmente si cuentan con tutor o co-tutor que pueda dirigir el proyecto.Una vez asignado el TFM, será obligación del alumno contactar con el/la tutor/a de dicho TFM para concretar una primera reunión de seguimientoa fin de definir los objetivos y alcance del proyecto. El estudiante también deberá solicitar a su tutor/a que le devuelva el compromiso de tutorización firmadopara entregarlo en la actividad correspondiente en el Aula.
+
+===== PAGE 20 =====
+
+Resumen fechas para selección de Trabajos de Fin de Máster ACTIVIDAD Contenido/Tema Fecha Tipo Localización ResponsableACTIVIDAD 1Tutoría colectiva. Presentación TFM.11/09/2025VCVideoconferencias Coordinador TFMACTIVIDAD 2Publicación de temas propuestos19/09/2025 PDFRecursos y Materiales Anuncio vía e-mailCoordinador TFMACTIVIDAD 3Elección tema TFM 24-28/09/2026 Formulario GoogleRecursos y Materiales Anuncio vía e-maillEstudiante
+20
+ 20Anuncio vía e-maillACTIVIDAD 4Asignación tema-director/a03/10/2026(10/10/2025 -propuestas propias)PDFRecursos y materialesAnuncio vía e-mailCoordinador TFMACTIVIDAD 5Subir compromiso de tutorización firmado por el/la tutor/a27/10/2025 PDF Actividades a entregar Estudiante/Tutor
+
+===== PAGE 21 =====
+
+Obligación del alumno:1. Depósito TFM2.Anexo1.SolicitudparalapresentaciónydefensadelTFMDepósito y defensaSolicitary AsignarDepositarDefender
+21
+2.Anexo1.SolicitudparalapresentaciónydefensadelTFM3. Anexo 2. Informe de autorización del director.Nota: Lo debe cumplimentar y firmar el tutor, pero será el estudiante quien entregue dicho documento en laactividad correspondiente.4. Certificado de notas del estudianteexpedido desde e-Secretaría.Nota: No hace falta que tenga validez académica, pero se debe demostrar que se han superado TODAS lasasignaturas del Master.5. Presentación acto defensa TFM(PPT utilizada para realizar la defensa del TFM).
+
+
+===== PAGE 22 =====
+
+Depósito y DefensaHitos •Entrega de borradores(Word) del Trabajo Fin de Máster.•La entrega de al menos un borrador en los plazos estipulados es una tarea obligatoria  para la defensa del TFM.Contenido de los Hitos 1, 2 y 3.•Hito 1: entregade un borradorcon los siguientes contenidos de la memoria (5%):–Introducción–Estado del arte–Marco teórico
+22
+–Marco teóricoEsta actividad supondrá hasta un 5% de la evaluación del Director  del TFM.•Hito 2: entrega de un borradorcon los siguientes contenidos  (5%):–Desarrollo del proyecto:•Descripción del problema•Metodología•Resultados preliminares•Hito 3: entrega del BORRADOR de laversión definitiva de la memoria (20%).
+
+===== PAGE 23 =====
+
+2da Convocatoria:Depósito y DefensaFechas de entrega Hitos, depósito y defensa1ra Convocatoria:Hito1:   01/12/2025Hito2:  15/12/2025Hito 1 7 Semanas antes de la fecha del depósito del periodo correspondienteHito 2 5 Semanas antes de la fecha del depósito del periodo correspondienteHito 3 3 Semanas antes de la fecha del depósito del periodo correspondiente
+23
+2da Convocatoria:Hito1:   12/01/2026Hito 2:  26/01/2026Hito 3:  09/02/2026Depósito:  02/03/2026Defensa:   16-20/03/2026
+Hito2:  15/12/2025Hito 3: 19/01/2026Depósito:  09/02/2026Defensa:  23-27/02/20263ra Convocatoria:Hito1:  16/02/2026Hito 2:  02/03/2026Hito 3:  16/03/2026Depósito:  14/04/2026Defensa:  27-30/04/2026
+
+===== PAGE 24 =====
+
+i.Descripción TFMii.Modalidadesiii.Roles y responsabilidadesiv.Calendariov.Solicitudy asignaciónÍndice
+24
+v.Solicitudy asignaciónvi.Criterios de evaluación
+
+
+===== PAGE 25 =====
+
+CRITERIO DE EVALUACIÓN•Director/a (Hitos, Memoria)Porcentaje de la calificación final 30%Aspectos a valorar:•Nivel de autonomía e independencia del alumno•Grado de cumplimiento de los objetivos marcados•Capacidad de razonamiento por parte del alumno•Nivel de redacción
+25
+No se aceptará para la defensa memorias con insuficiente calidad ortográfica o sin referencias bibliográficas adecuadas“Se recomienda que la memoria del TFM tenga un número de páginas de contenido  comprendido entre 40 y 80 (en ningún caso inferior a 40) sin contar dedicatorias, índices, resumen, anexos.”•Nivel de redacción•Gestión del tiempo•Carácter proactivo del alumno
+
+===== PAGE 26 =====
+
+TRIBUNAL:MemoriaPorcentaje sobre la calificación final 55%Aspectos a valorar:•Contenido adecuado (consideraciones técnicas, revisión bibliográfica, metodología…)•Calidad escritura•Formato depende del tipo de TFM (académico o aplicación)•Informe de plagio> 30% NO APTOCRITERIO DE EVALUACIÓN
+26
+•Informe de plagio> 30% NO APTO
+DefensaPorcentaje de la calificación final 15%Aspectos a valorar:•Presentación en Power Point acorde con contenido de la Memoria•Dominio de los contenidos•Ajuste a los tiempos (20 min. exposición + 15 min. preguntas)
+
+===== PAGE 27 =====
+
+¿Preguntas?Preguntas
+27
+
+
+===== PAGE 28 =====
+
+GRACIAS

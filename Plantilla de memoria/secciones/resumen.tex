@@ -4,4 +4,22 @@
 \label{resumen}
 \addcontentsline{toc}{chapter}{Resumen}
 
-% Escribe aquí 
+Este Trabajo Fin de M\'aster aborda el problema de predicci\'on de ventas semanales en el sector minorista a partir de la serie hist\'orica de ventas y un conjunto de variables ex\'ogenas (calendario, festivos e indicadores macroecon\'omicos). El objetivo principal es dise\~nar un protocolo experimental reproducible y comparar, bajo condiciones homog\'eneas, varios enfoques de modelado capaces de incorporar covariables externas: modelos estad\'isticos (\acrshort{sarimax}), un modelo aditivo a escala (Prophet), un enfoque probabil\'istico basado en \acrshort{rnn} (DeepAR) y dos modelos neuronales globales (\acrshort{lstm} y Transformer). Para garantizar una comparaci\'on justa, se establecen particiones temporales coherentes y un proceso de ingenier\'ia de caracter\'isticas causal que evita fuga de informaci\'on (lags y estad\'isticos m\'oviles construidos exclusivamente con pasado). La evaluaci\'on se realiza mediante \acrshort{mae}, \acrshort{rmse} y \acrshort{smape}, reportando tanto resultados globales como por tienda.
+
+Los resultados muestran que la incorporaci\'on de variables ex\'ogenas mejora el rendimiento en escenarios donde las covariables aportan se\~nal relevante y est\'an disponibles a futuro (especialmente las de calendario). En general, los modelos globales neuronales y DeepAR tienden a beneficiarse de la informaci\'on compartida entre tiendas, mientras que \acrshort{sarimax} y Prophet ofrecen interpretabilidad y un comportamiento robusto en tiendas con patrones estables. Adem\'as, se incluyen experimentos de robustez para estudiar el comportamiento del sistema ante series cortas y ante cambios estructurales relacionados con un choque econ\'omico. Finalmente, se discuten limitaciones clave (supuesto \emph{oracle} de ciertas covariables, sensibilidad a cambios de distribuci\'on) y se proponen l\'ineas futuras para llevar los modelos a un entorno operativo.
+
+\medskip
+\noindent\textbf{Palabras clave:} series temporales; predicci\'on de demanda; variables ex\'ogenas; modelos globales; aprendizaje profundo.
+
+\cleardoublepage
+
+\chapter*{Abstract}
+\label{abstract}
+\addcontentsline{toc}{chapter}{Abstract}
+
+This Master's Thesis tackles the problem of weekly retail sales forecasting using historical sales together with a set of exogenous variables (calendar, holidays, and macroeconomic indicators). The main goal is to design a reproducible experimental protocol and to compare, under homogeneous conditions, several forecasting approaches that can explicitly leverage external covariates: statistical models (\acrshort{sarimax}), a scalable additive model (Prophet), a probabilistic \acrshort{rnn}-based model (DeepAR), and two global neural architectures (\acrshort{lstm} and a Transformer). To ensure a fair comparison, the work enforces consistent temporal splits and a leakage-safe feature engineering process, where target-derived features (lags and rolling statistics) are computed causally using only past information. Model accuracy is evaluated using \acrshort{mae}, \acrshort{rmse}, and \acrshort{smape}, reporting both global results and per-store performance.
+
+The results indicate that adding exogenous variables improves performance when covariates carry predictive signal and are available for the forecasting horizon (especially calendar-related features). Overall, DeepAR and global neural models benefit from shared information across stores, whereas \acrshort{sarimax} and Prophet provide interpretability and robust behavior for stores with stable patterns. The thesis also includes robustness experiments to analyze performance under short histories and under distribution shifts related to an economic shock. Finally, key limitations are discussed (notably the \emph{oracle} assumption for some covariates and sensitivity to regime changes), and future work is proposed to move towards a realistic operational setting.
+
+\medskip
+\noindent\textbf{Keywords:} time series; demand forecasting; exogenous variables; global models; deep learning.

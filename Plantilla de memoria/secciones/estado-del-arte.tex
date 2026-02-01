@@ -1,0 +1,26 @@
+% ESTADO DEL ARTE
+
+\cleardoublepage
+
+\chapter{Estado del arte}
+\label{estado-del-arte}
+
+La predicci\'on de series temporales en entornos reales (como el comercio minorista) es un problema cl\'asico y a la vez vigente: la demanda presenta estacionalidad, tendencias, efectos calendario y cambios estructurales asociados a promociones, festivos o choques macroecon\'omicos. En este contexto, la literatura ofrece dos grandes familias de enfoques: (i) modelos estad\'isticos interpretables basados en estructuras lineales y (ii) modelos de aprendizaje autom\'atico, especialmente redes neuronales profundas, que aprenden representaciones no lineales a partir de grandes colecciones de series.
+
+\section{Modelos estad\'isticos para series temporales}
+Los modelos \acrfull{arima} y sus extensiones siguen siendo una referencia por su interpretabilidad y por la claridad con la que separan componentes autorregresivos, de media m\'ovil e integraci\'on. Una extensi\'on habitual para incorporar covariables externas es la regresi\'on din\'amica, que combina regresi\'on (con variables ex\'ogenas) y errores modelados mediante ARIMA; este enfoque se conoce com\'unmente como \acrfull{sarimax}. Su fortaleza reside en la capacidad de capturar dependencias temporales y, a la vez, incluir informaci\'on explicativa adicional (por ejemplo, festivos o indicadores econ\'omicos), siempre que las covariables est\'en disponibles sin fuga de informaci\'on. Una exposici\'on moderna y aplicada puede encontrarse en \citet{hyndman2021fpp3}, mientras que el tratamiento cl\'asico se recoge en \citet{box2015tsa}.
+
+\section{Modelos aditivos y Prophet}
+Prophet es un modelo aditivo dise\~nado para series con estacionalidad y efectos de calendario, optimizado para su uso a escala y con un \emph{workflow} robusto ante datos faltantes y cambios de tendencia. Adem\'as, permite incorporar regresores externos (\emph{regressors}) de forma directa, lo que lo hace atractivo en escenarios donde ciertas variables explicativas se conocen a futuro o pueden estimarse con suficiente antelaci\'on. \citet{taylor2018forecasting} describen su formulaci\'on y su enfoque de dise\~no orientado a la operaci\'on en entornos industriales.
+
+\section{Modelos neuronales: \texorpdfstring{\acrshort{rnn}}{RNN} y aprendizaje global}
+En aplicaciones con m\'ultiples series (p.~ej., ventas por tienda) es com\'un adoptar enfoques \emph{globales}: un \''unico modelo aprende patrones compartidos y diferencias sistem\'aticas entre series, lo que permite generalizar mejor cuando hay series cortas o ruidosas. Entre los m\'etodos neuronales m\'as influyentes se encuentran las \acrfull{rnn} y, en particular, las \acrfull{lstm}, capaces de modelar dependencias de largo alcance mediante compuertas que mitigan el desvanecimiento del gradiente \citep{hochreiter1997long}. Para mejorar la capacidad de generalizaci\'on, el \acrfull{dropout} es un regularizador est\'andar que aproxima un ensamble de subredes y reduce el sobreajuste \citep{srivastava2014dropout}.
+
+\section{Pron\'ostico probabil\'istico y DeepAR}
+En el \''ambito del pron\'ostico probabil\'istico, DeepAR propone una formulaci\'on autoregresiva basada en \acrshort{rnn} que produce distribuciones predictivas condicionales, permitiendo cuantificar incertidumbre y soportar covariables (din\'amicas y est\'aticas) \citep{flunkert2017deepar}. Este tipo de modelos resulta especialmente adecuado cuando se requiere una estimaci\'on de riesgo o cuando se desea comparar no solo el error medio sino tambi\'en la calibraci\'on de la incertidumbre.
+
+\section{Transformers y atenci\'on}
+Los Transformers han demostrado un gran rendimiento en secuencias mediante mecanismos de atenci\'on que permiten modelar dependencias sin recurrencia, facilitando el paralelismo y el aprendizaje de relaciones a largo plazo. La arquitectura fundacional se introdujo en \citet{vaswani2017attention}. En series temporales, las variantes basadas en atenci\'on se han convertido en una l\'inea activa de investigaci\'on, especialmente en contextos multivariantes y con gran cantidad de covariables.
+
+\section{Evaluaci\'on y comparaci\'on de modelos}
+La comparaci\'on objetiva de modelos exige protocolos de validaci\'on temporal y m\'etricas acordes al problema. Medidas como \acrshort{mae}, \acrshort{rmse} y \acrshort{smape} son habituales; sin embargo, cada una enfatiza propiedades distintas (sensibilidad a outliers, penalizaci\'on cuadr\'atica, o comparabilidad relativa), por lo que conviene reportar varias y discutir su interpretaci\'on \citep{hyndman2006another,hyndman2021fpp3}.

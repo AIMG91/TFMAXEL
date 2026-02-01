@@ -1,0 +1,19 @@
+\begin{table}[ht!]
+\centering
+\small
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{p{9.5cm}rrr}
+\toprule
+Modelo & MAE & RMSE & sMAPE \\
+\midrule
+transformer\_exog\_\_dm128\_\_nh8\_\_nl4\_\_do0.1\_\_lr0.0003 & 50,989.60 & 68,451.73 & 5.53 \\
+deepar\_exog\_\_hs80\_\_nl2\_\_do0.1\_\_lr0.0005\_\_bs32 & 58,954.49 & 82,957.67 & 6.16 \\
+deepar\_exog & 59,573.68 & 86,287.62 & 6.04 \\
+deepar\_exog\_\_hs40\_\_nl2\_\_do0.1\_\_lr0.001\_\_bs32 & 61,163.80 & 89,421.24 & 6.13 \\
+deepar\_exog\_\_hs80\_\_nl3\_\_do0.2\_\_lr0.001\_\_bs64 & 62,260.56 & 89,886.14 & 6.19 \\
+\bottomrule
+\end{tabular}
+}
+\caption{\textbf{Top-5 modelos globales por MAE (E2).}}
+\label{tab:top5}
+\end{table}

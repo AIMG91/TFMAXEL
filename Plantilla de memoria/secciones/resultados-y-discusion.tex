@@ -4,3 +4,78 @@
 
 \chapter{Resultados y Discusión}
 \label{resultados-y-discusion}
+
+\section{Resumen de resultados}
+En esta secci\'on se resumen los resultados obtenidos en los experimentos y se discuten los patrones observados. Para facilitar la comparaci\'on entre modelos, se reportan m\'etricas globales (agregadas) y m\'etricas por tienda. La discusi\'on se centra en dos ejes: (i) el impacto de incorporar variables ex\'ogenas y (ii) la capacidad de generalizaci\'on de modelos globales frente a enfoques por serie.
+
+\section{Comparación global entre familias (configuración base)}
+Como punto de partida, la Tabla~\ref{tab:comparacion-global} compara familias de modelos con una configuración base.
+
+\input{tablas/tabla_comparacion_global.tex}
+
+\noindent La Figura~\ref{fig:metrics-comparison-global} complementa la tabla, facilitando una lectura visual conjunta.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.95\textwidth]{figuras/metrics_comparison_global.png}
+	\caption[Comparación global de métricas]{\textbf{Comparación global de métricas (MAE/RMSE/sMAPE).} Menor es mejor.}
+	\label{fig:metrics-comparison-global}
+\end{figure}
+
+\section{Ranking global por MAE}
+La Figura~\ref{fig:top10-mae} muestra el ranking de los mejores modelos seg\'un \acrshort{mae}. Esta visualizaci\'on es \''util para identificar configuraciones competitivas y comparar la estabilidad de rendimiento.
+
+\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=0.95\textwidth]{figuras/top10_mae.png}
+		\caption[Top 10 modelos por MAE]{\textbf{Top 10 modelos por MAE.} Menor es mejor.}
+		\label{fig:top10-mae}
+\end{figure}
+
+\section{Tabla comparativa de m\'etricas}
+La Tabla~\ref{tab:top10} recoge \acrshort{mae}, \acrshort{rmse} y \acrshort{smape} para los modelos mejor posicionados seg\'un el resumen experimental.
+
+\input{tablas/tabla_top10_metricas.tex}
+
+\section{Comparaci\'on normalizada de las top-5 configuraciones}
+La Figura~\ref{fig:top5-normalized} compara las top-5 configuraciones tras normalizar cada m\'etrica para facilitar una lectura conjunta. En general, un modelo puede dominar en \acrshort{mae} pero no necesariamente en \acrshort{rmse} (m\'as sensible a errores grandes) o en \acrshort{smape} (m\'etrica relativa).
+
+\begin{figure}[ht!]
+		\centering
+		\includegraphics[width=0.95\textwidth]{figuras/top5_metrics_normalized.png}
+		\caption[Top 5 comparaci\'on normalizada]{\textbf{Top 5: comparaci\'on normalizada de MAE, RMSE y sMAPE.} Menor es mejor.}
+		\label{fig:top5-normalized}
+\end{figure}
+
+\section{Discusi\'on}
+De forma cualitativa, se observan los siguientes patrones:
+\begin{itemize}
+	\item \textbf{Beneficio de covariables}: las variables de calendario tienden a aportar se\~nal consistente; su impacto es mayor en tiendas con estacionalidad marcada.
+	\item \textbf{Modelos globales}: en presencia de m\'ultiples tiendas, los enfoques globales (DeepAR, \acrshort{lstm} y Transformer) pueden beneficiarse de patrones compartidos, en especial cuando algunas series son cortas.
+	\item \textbf{Interpretabilidad}: \acrshort{sarimax} y Prophet aportan interpretabilidad y diagn\'ostico de componentes. En cambio, los modelos neuronales capturan no linealidades y efectos combinados, a costa de mayor complejidad.
+	\item \textbf{Sensibilidad a cambios de r\'egimen}: los errores tienden a aumentar ante cambios estructurales; este aspecto se analiza en experimentos de robustez y se retoma en limitaciones.
+\end{itemize}
+
+En conjunto, los resultados respaldan el uso de variables ex\'ogenas cuando su disponibilidad a futuro est\'a garantizada o es estimable, y sugieren que el aprendizaje global es una estrategia adecuada en escenarios multiserie.
+
+\section{Ablaciones: valor de las exógenas y del calendario}
+Una cuestión clave es separar el aporte de:
+\begin{itemize}
+	\item \textbf{Calendario} (conocido a futuro), y
+	\item \textbf{Exógenas observadas} (no garantizadas a futuro sin hipótesis adicional).
+\end{itemize}
+\noindent [COMPLETAR: tabla/figura de ablación con 3 condiciones: (i) solo lags, (ii) lags+calendario, (iii) lags+calendario+exógenas; reportar MAE/RMSE/sMAPE global y por tienda.]
+
+\section{Escenario realista vs. escenario \emph{oracle}}
+La hipótesis \emph{oracle} (exógenas conocidas en el horizonte) tiende a favorecer modelos con regresores ricos.
+En un despliegue realista, la comparación debe considerar o bien exógenas realmente conocidas (calendario, festivos), o bien el error compuesto de un pipeline que primero predice exógenas y después predice ventas.
+\noindent [COMPLETAR: experimento adicional con predicción de exógenas o con sustitución por "last observation carried forward" para exógenas no conocidas.]
+
+\section{Heterogeneidad por tienda}
+Además de la métrica global, el análisis por tienda permite identificar:
+\begin{itemize}
+	\item tiendas donde los modelos globales transfieren bien patrones,
+	\item tiendas con alta volatilidad o cambios de régimen,
+	\item casos donde un modelo simple puede ser competitivo.
+\end{itemize}
+\noindent [COMPLETAR: incluir percentiles (p50/p75/p90) de MAE por tienda y ejemplos de 2--3 tiendas representativas.]

@@ -5,79 +5,22 @@
 \chapter{Introducción}
 \label{introduccion}
 
-Escribe aquí la introducción de tu Trabajo Fin de Máster, utilizando tantas secciones, subsecciones y subsubsecciones como estimes necesarias.
+La predicci\'on de demanda es una pieza central en la gesti\'on de cadenas de suministro y operaciones minoristas: afecta a decisiones de inventario, planificaci\'on de personal, reposici\'on y dise\~no de promociones. En series temporales reales, las ventas presentan estacionalidad (anual y semanal), efectos calendario (festivos y eventos), tendencias, as\'i como perturbaciones externas asociadas a cambios macroecon\'omicos o a choques de oferta y demanda. Este Trabajo Fin de M\'aster se centra en el pron\'ostico de ventas semanales por tienda, utilizando informaci\'on hist\'orica y un conjunto de variables ex\'ogenas.
 
-\section{Mi primera sección}
-\label{mi-primera-seccion}
+\section{Motivaci\'on}
+En entornos multi-tienda es habitual disponer de decenas o centenares de series con comportamientos heterog\'eneos. Modelar cada tienda de forma independiente puede ser sub\'optimo cuando hay series cortas o ruidosas; en cambio, los \emph{modelos globales} explotan patrones compartidos y pueden mejorar la generalizaci\'on. Al mismo tiempo, existe una necesidad pr\'actica de incorporar covariables externas (por ejemplo, festivos o indicadores econ\'omicos), lo que favorece enfoques que acepten regresores.
 
-\textbf{Esta palabra} está en negrita. \textit{Esta palabra} está en cursiva. \destacado{Esta palabra} se destaca en púrpura.
-\medskip
+\section{Planteamiento del problema}
+Se aborda un problema de predicci\'on multiserie: para cada tienda, se desea predecir las ventas en un horizonte fijo (semanas futuras) a partir del historial de ventas y covariables. El proyecto prioriza una comparaci\'on \emph{homog\'enea} de modelos: se seleccionan m\'etodos capaces de manejar variables ex\'ogenas y se define un protocolo de validaci\'on temporal com\'un para todos.
 
-\section{Mi segunda sección}
-\label{mi-segunda-seccion}
-
-En la sección~\ref{mi-primera-seccion} se muestran ejemplos de palabras en negrita, cursiva y destacadas en púrpura.
-\medskip
-
-% Define los acrónimos en el fichero secciones/glosario.tex
-% Define la bibliografía en el fichero bibliografia.bib
-Una \acrfull{gan} es... \citep{goodfellow2014generative}.
-\medskip
-
-\citet{goodfellow2014generative} diseñaron las redes generativas antagónicas como...
-\medskip
-
-\vspace{5ex}
-
-Listado:
+\section{Aportaciones}
+Las principales contribuciones del trabajo son:
 \begin{itemize}
-  \item Item 1.
-  \item Item 2.
-  \item Item 3.
+  \item Un protocolo experimental reproducible para comparar modelos con regresores ex\'ogenos en ventas semanales.
+  \item Una implementaci\'on unificada de experimentos y m\'etricas (\acrshort{mae}, \acrshort{rmse}, \acrshort{smape}) con resultados globales y por tienda.
+  \item Un an\'alisis de robustez ante series cortas y ante cambios estructurales asociados a un choque econ\'omico.
+  \item Integraci\'on de modelos representativos: \acrshort{sarimax}, Prophet \citep{taylor2018forecasting}, DeepAR \citep{flunkert2017deepar} y arquitecturas neuronales globales (\acrshort{lstm} \citep{hochreiter1997long} y Transformer \citep{vaswani2017attention}).
 \end{itemize}
 
-Enumeración:
-\begin{enumerate}
-  \item Item 1.
-  \item Item 2.
-  \item Item 3.
-\end{enumerate}
-
-\subsection{Una subsección}
-\label{una-subseccion}
-
-La figura~\ref{fig1} muestra...
-
-\begin{figure}[ht!]
-    \centering
-    \includegraphics[scale=0.15]{figuras/fig1.png}
-    % \caption[Así aparece el rótulo en el índice]{Así aparece el rótulo en el texto.}
-    \caption[Tipos de grafos]{\textbf{Tipos de grafos.}}
-    \label{fig1}
-\end{figure}
-
-La tabla~\ref{tab1} muestra...
-
-\input{tablas/tabla1.tex}
-
-\subsection{Una subsubsección}
-\label{una-subsubseccion}
-
-El algoritmo~\ref{alg1} muestra...
-\medskip
-
-\input{algoritmos/algoritmo1.tex}
-
-\newpage
-
-Ejemplo de fórmula:
-
-\begin{equation*}
-    N_{k}(\mathbf{\mu},\mathbf{\Sigma}) = \frac{1}{\sqrt{2\pi\det(\Sigma})} \exp \bigg\{ -\frac{1}{2}(\mathbf{X}-\mathbf{\mu})^{T}\Sigma^{-1}(\mathbf{X}-\mathbf{\mu}) \bigg\} \quad \mathbf{X},\mathbf{\mu} \in \mathbb{R}^{k}
-\end{equation*}
-
-Otro ejemplo de fórmula:
-
-\begin{equation*}
-    \underbrace{P(\mathcal{B}|\mathcal{D}) = P(\mathcal{\mathcal{G}},\Theta|\mathcal{D})}_{\textbf{Aprendizaje}} = \underbrace{P(\mathcal{G}|\mathcal{D})}_{\textbf{Aprendizaje estructural}} \cdot \underbrace{P(\Theta|\mathcal{G},\mathcal{D})}_{\textbf{Aprendizaje paramétrico}}
-\end{equation*}
+\section{Estructura de la memoria}
+El documento se organiza de la siguiente forma. El cap\'itulo de \textbf{Estado del arte} revisa los enfoques relevantes para series temporales con covariables. El \textbf{Marco te\'orico} introduce los conceptos necesarios (validaci\'on temporal, fuga de informaci\'on, m\'etricas y regularizaci\'on). A continuaci\'on, se definen los \textbf{Objetivos}, la \textbf{Metodolog\'ia} y el dise\~no experimental. Finalmente, se presentan \textbf{Resultados y Discusi\'on}, \textbf{Conclusiones} y \textbf{Limitaciones y l\'ineas futuras}.

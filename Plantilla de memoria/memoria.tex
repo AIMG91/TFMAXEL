@@ -14,16 +14,14 @@
 \usepackage{amsxtra}
 \usepackage{amssymb}
 \usepackage{amsthm}
-\usepackage{latexsym}
 \usepackage{setspace}
 \usepackage[margin=3cm]{geometry}
 \usepackage[titles]{tocloft}
-\usepackage{latexsym}
 \usepackage{fancyhdr}
 \usepackage{emptypage}
-\usepackage[svgnames,dvipsnames,usenames,table,xcdraw]{xcolor}
+\usepackage[svgnames,dvipsnames,table,xcdraw]{xcolor}
 \usepackage{tikz}
-\usepackage[toc,acronym,nonumberlist,xindy={language=spanish-traditional},sanitize=none]{glossaries}
+\usepackage[toc,acronym,nonumberlist]{glossaries}
 \usepackage[scaled]{helvet}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
@@ -31,7 +29,6 @@
 \usepackage[explicit]{titlesec}
 \usepackage{newtxtext}
 \usepackage{newtxmath}
-\usepackage{stmaryrd}
 \usepackage{bbold}
 \usepackage[ruled,vlined]{algorithm2e}
 \usepackage{algorithmic}
@@ -62,7 +59,6 @@
 \addto\captionsspanish{
     \renewcommand*{\acronymname}{Lista de Acr\'onimos}
 }
-\newcommand{\inhib}{\relbar\mapsfromchar}
 \newcommand{\destacado}[1]{\color{DESTACADO}\textbf{#1}\color{black}\xspace}
 
 \usetikzlibrary{shapes}
@@ -97,6 +93,9 @@
   \selectfont%
 }
 
+% Avoid fancyhdr warnings about \headheight being too small.
+\setlength{\headheight}{14.5pt}
+
 \titleformat{name=\chapter}
 {\normalfont\huge\bfseries}
 {\rlap{\parbox{\textwidth}{\filleft\chapnumfont\color{chapnumcolor}\thechapter}}}
@@ -117,7 +116,6 @@
 \hypersetup{
     linktocpage=true,
     colorlinks=true,
-    bookmarks=true,
     citecolor=CITA,
     urlcolor=CITA,
     linkcolor=CITA,
@@ -125,18 +123,20 @@
     urlbordercolor={1 0 0},
     linkbordercolor={.7 .8 .8},
     breaklinks=true,
-    pdfpagelabels=true,
     }
 
 \setcounter{secnumdepth}{3}
 \onehalfspacing
 \renewcommand\familydefault{\sfdefault}
+\raggedbottom
 
 \begin{document}
 
 \input{secciones/portada.tex}
 \input{secciones/frase-favorita.tex}
 
+% Avoid duplicate PDF destination warnings while page numbers are suppressed.
+\hypersetup{pageanchor=false}
 \pagenumbering{gobble}
 \input{secciones/agradecimientos.tex}
 \cleardoublepage
@@ -144,6 +144,7 @@
 \newpage
 \pagenumbering{roman}
 \setcounter{page}{1}
+\hypersetup{pageanchor=true}
 
 \pagestyle{fancy}
 \fancyhf{}
@@ -172,9 +173,14 @@
 
 \input{secciones/resumen.tex}
 \input{secciones/introduccion.tex}
+\input{secciones/estado-del-arte.tex}
+\input{secciones/marco-teorico.tex}
 \input{secciones/objetivos.tex}
+\input{secciones/datos-y-covariables.tex}
 \input{secciones/metodologia.tex}
+\input{secciones/modelos.tex}
 \input{secciones/resultados-y-discusion.tex}
+\input{secciones/reproducibilidad.tex}
 \input{secciones/conclusiones.tex}
 \input{secciones/limitaciones-y-futuro.tex}
 

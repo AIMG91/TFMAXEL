@@ -1,9 +1,36 @@
-% APÉNDIZES
+% APÉNDICES
 
-% Escribe cada apéndize como si fuera un capítulo más.
+% Escribe cada apéndice como si fuera un capítulo más.
 
-\chapter{Apéndize A}
-\label{apendize-a}
+\cleardoublepage
 
-\chapter{Apéndize B}
-\label{apendize-b}
+\chapter{Apéndice A: Detalles de configuración}
+\label{apendice-configuracion}
+
+\section{Metadatos de ejecución}
+Se registran metadatos de configuración (semilla, features, librerías) en el fichero:
+\par\noindent\nolinkurl{outputs/metadata_experiments.json}\par
+\noindent [COMPLETAR: incluir aquí (o como tabla) el contenido relevante de metadatos para la entrega final.]
+
+\section{Lista de características}
+\noindent [COMPLETAR: tabla con features exactas usadas en el experimento principal.]
+
+\chapter{Apéndice B: Figuras adicionales}
+\label{apendice-figuras}
+
+\section{Distribución de errores}
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.95\textwidth]{figuras/transformer_exog_plot_error_dist.png}
+	\caption[Distribución de errores (Transformer)]{\textbf{Distribución de errores (Transformer).} Histograma/resumen de errores sobre el horizonte de evaluación.}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.95\textwidth]{figuras/deepar_exog_plot_error_dist.png}
+	\caption[Distribución de errores (DeepAR)]{\textbf{Distribución de errores (DeepAR).} Histograma/resumen de errores sobre el horizonte de evaluación.}
+\end{figure}
+
+\section{Ejemplos por tienda}
+\noindent [COMPLETAR: insertar 2--3 figuras de predicción vs. real por tienda para modelos representativos.]
+

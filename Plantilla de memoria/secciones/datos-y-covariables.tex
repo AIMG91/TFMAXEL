@@ -1,0 +1,57 @@
+% DATOS Y COVARIABLES
+
+\cleardoublepage
+
+\chapter{Datos y covariables}
+\label{datos-y-covariables}
+
+\section{Descripción del conjunto de datos}
+El trabajo utiliza el conjunto de datos \emph{Walmart Store Sales}, con observaciones semanales de ventas agregadas por tienda.
+Cada registro se identifica por el par \texttt{(Store, Date)} y la variable objetivo es \texttt{Weekly\_Sales}.
+El dataset contiene 45 tiendas, 143 semanas (desde el 5 de febrero de 2010 hasta el 26 de octubre de 2012) y 6435 observaciones en total.
+
+\subsection{Variables disponibles}
+El fichero incluye las siguientes columnas:
+\begin{itemize}
+  \item \textbf{Identificadores}: \texttt{Store} (tienda), \texttt{Date} (fecha semanal).
+  \item \textbf{Objetivo}: \texttt{Weekly\_Sales} (ventas semanales).
+  \item \textbf{Exógenas observadas}:
+  \begin{itemize}
+    \item \texttt{Holiday\_Flag} (indicador binario de semana festiva)
+    \item \texttt{Temperature}
+    \item \texttt{Fuel\_Price}
+    \item \texttt{CPI}
+    \item \texttt{Unemployment}
+  \end{itemize}
+\end{itemize}
+En este dataset no se observan valores perdidos en ninguna de las variables.
+
+\section{Taxonomía de covariables y disponibilidad a futuro}
+Un aspecto central de este \acrshort{tfm} es que la utilidad de las covariables depende de su \textbf{disponibilidad en el horizonte de predicción}.
+Por ello, distinguimos:
+\begin{itemize}
+  \item \textbf{Covariables conocidas a futuro} (\emph{known-future}): variables de calendario derivadas de la fecha (semana del año, mes, año) y, en escenarios realistas, un calendario de festivos publicado con antelación.
+  \item \textbf{Covariables observadas (no garantizadas) a futuro}: variables como temperatura, precio del combustible, \acrshort{cpi} o desempleo pueden no estar disponibles con certeza en el futuro.
+  En consecuencia, su uso directo en predicción implica una hipótesis adicional (por ejemplo, una predicción exógena previa o un escenario \emph{oracle}).
+\end{itemize}
+Esta distinción guía el diseño experimental y la discusión de resultados para evitar conclusiones no transferibles a un entorno de producción.
+
+\section{Ingeniería de características}
+A partir de las variables originales se construyen características causales, con especial cuidado para evitar \textbf{fuga de información}.
+Se usan tres grupos:
+\begin{itemize}
+  \item \textbf{Lags del objetivo}: \texttt{lag\_1}, \texttt{lag\_2}, \texttt{lag\_4}, \texttt{lag\_8} y \texttt{lag\_52}.
+  \item \textbf{Estadísticos móviles}: \texttt{roll\_mean\_4}, \texttt{roll\_mean\_8}, \texttt{roll\_std\_8} (y ventanas adicionales según configuración).
+  \item \textbf{Calendario}: \texttt{weekofyear}, \texttt{month} y \texttt{year}.
+\end{itemize}
+Todas las características derivadas del objetivo se calculan únicamente con valores \textbf{anteriores} al instante de predicción.
+
+\section{Normalización y representación}
+Los modelos neuronales globales (\acrshort{lstm} y Transformer) operan sobre secuencias multivariantes y emplean normalización (\emph{standardization})
+para estabilizar el entrenamiento.
+Los modelos estadísticos (
+\acrshort{sarimax} y Prophet) consumen regresores en su escala original, pudiendo beneficiarse de transformaciones adicionales; en este trabajo se prioriza la comparabilidad del pipeline.
+
+\section{Horizonte de evaluación}
+La evaluación principal considera un horizonte de test de 39 semanas, correspondiente al tramo 2012-02-03 a 2012-10-26.
+Este horizonte se utiliza para comparar modelos bajo el mismo conjunto de fechas y tiendas.

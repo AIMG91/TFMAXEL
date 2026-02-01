@@ -1,0 +1,40 @@
+% MARCO TE\'ORICO
+
+\cleardoublepage
+
+\chapter{Marco te\'orico}
+\label{marco-teorico}
+
+Este cap\'itulo resume los conceptos te\'oricos necesarios para comprender el dise\~no experimental y la selecci\'on de modelos del proyecto: formulaci\'on del problema de pron\'ostico, papel de las variables ex\'ogenas, prevenci\'on de fuga de informaci\'on y m\'etricas de evaluaci\'on.
+
+\section{Formulaci\'on del problema}
+Sea $y_{t}$ la variable objetivo (ventas semanales) para una tienda determinada. El objetivo es construir un modelo que, dado un historial de $y_{1:t}$ y un conjunto de covariables $\mathbf{x}_{1:t+h}$, produzca predicciones $\hat{y}_{t+1:t+h}$ para un horizonte $h$.
+
+En este proyecto se considera un escenario con covariables ex\'ogenas relacionadas con calendario (p.~ej., semana del a\~no, indicadores de festivos) y con factores econ\'omicos. Para mantener la comparabilidad, se priorizan modelos que acepten covariables externas de manera expl\'icita (\acrshort{sarimax}, Prophet con regresores, DeepAR con covariables y modelos neuronales multivariantes).
+
+\section{Variables ex\'ogenas y supuestos de disponibilidad}
+Un aspecto cr\'itico al usar variables ex\'ogenas es distinguir entre:
+\begin{itemize}
+  \item \textbf{Covariables conocidas a futuro}: calendario y festivos planificados.
+  \item \textbf{Covariables no conocidas a futuro}: indicadores macroecon\'omicos publicados con retraso o inciertos.
+\end{itemize}
+En la parte experimental se adopta un supuesto \emph{oracle} para ciertas variables (se asume que pueden utilizarse en el horizonte de predicci\'on). Este supuesto permite estudiar el \emph{potencial} de mejora al incorporar informaci\'on externa, pero debe interpretarse como un l\'imite superior de rendimiento. Las implicaciones y limitaciones de este supuesto se discuten en el cap\'itulo de limitaciones.
+
+\section{Fuga de informaci\'on y validaci\'on temporal}
+En series temporales, la fuga de informaci\'on aparece cuando una transformaci\'on usa informaci\'on del futuro para construir variables en el pasado. Para evitarlo, las caracter\'isticas derivadas del objetivo (lags, medias m\'oviles) deben construirse de forma \emph{causal}, es decir, utilizando $y_{\tau}$ solo para predecir instantes posteriores.
+
+Asimismo, los esquemas de partici\'on deben respetar el orden temporal. En lugar de validaci\'on aleatoria, se emplean particiones temporales y, cuando procede, evaluaci\'on \emph{walk-forward} (entrenar en un prefijo y validar en un segmento posterior) \citep{hyndman2021fpp3}.
+
+\section{M\'etricas de error}
+Para evaluar el rendimiento se reportan tres m\'etricas complementarias:
+\begin{itemize}
+  \item \textbf{MAE} ($\acrshort{mae}$): $\frac{1}{n}\sum_{i=1}^{n} |y_i-\hat{y}_i|$. Es interpretable en unidades originales y robusta ante outliers comparada con RMSE.
+  \item \textbf{RMSE} ($\acrshort{rmse}$): $\sqrt{\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2}$. Penaliza m\'as los errores grandes.
+  \item \textbf{sMAPE} ($\acrshort{smape}$): una versi\'on sim\'etrica del MAPE que facilita comparaciones relativas cuando las escalas var\'ian; conviene interpretarla con cautela cuando hay valores cercanos a cero \citep{hyndman2006another}.
+\end{itemize}
+
+\section{Regularizaci\'on y sobreajuste en redes neuronales}
+Los modelos neuronales tienden a sobreajustar cuando la cantidad de datos por serie es limitada o cuando la se\~nal tiene alta varianza. El \acrfull{dropout} es un mecanismo de regularizaci\'on ampliamente usado que reduce co-adaptaciones entre neuronas y mejora la generalizaci\'on \citep{srivastava2014dropout}.
+
+\section{Atenci\'on para series temporales}
+En arquitecturas tipo Transformer, la atenci\'on permite ponderar de forma adaptativa qu\'e instantes pasados resultan m\'as relevantes para predecir el futuro \citep{vaswani2017attention}. En contextos con m\'ultiples covariables, estos mecanismos pueden capturar interacciones complejas entre se\~nales.
