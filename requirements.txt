@@ -25,7 +25,16 @@ prophet==1.1.5
 
 # Notebooks
 jupyter==1.0.0
-ipykernel==6.29.5
+ipykernel>=6.29.5
+
+# Notebook execution (runner / SageMaker)
+nbclient>=0.10.0
+nbformat>=5.10.0
+jupyter_client>=8.6.0
+papermill>=2.6.0
+
+# Optional: interactive plots (Prophet)
+plotly>=5.20.0
 
 # Utilities
 tqdm==4.66.4
