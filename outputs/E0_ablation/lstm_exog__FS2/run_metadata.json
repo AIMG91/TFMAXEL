@@ -1,0 +1,87 @@
+{
+  "seed": 42,
+  "debug": true,
+  "model": "lstm_exog",
+  "feature_set": "FS2",
+  "split": {
+    "train_start": "2010-02-05",
+    "train_end": "2011-12-02",
+    "val_start": "2011-12-09",
+    "val_end": "2012-01-27",
+    "test_start": "2012-02-03",
+    "test_end": "2012-10-26"
+  },
+  "config": {
+    "lags": [
+      1,
+      2,
+      4,
+      8,
+      52
+    ],
+    "rollings": [
+      4,
+      8,
+      12
+    ],
+    "lookback": 52,
+    "epochs": 3,
+    "batch_size": 64,
+    "lr": 0.001,
+    "suppress_lookback_warning": false,
+    "add_calendar": true,
+    "exog_cols": [
+      "Holiday_Flag",
+      "Temperature",
+      "Fuel_Price",
+      "CPI",
+      "Unemployment"
+    ],
+    "feature_cols": [
+      "lag_1",
+      "lag_2",
+      "lag_4",
+      "lag_8",
+      "lag_52",
+      "roll_mean_4",
+      "roll_std_4",
+      "roll_mean_8",
+      "roll_std_8",
+      "roll_mean_12",
+      "roll_std_12",
+      "Holiday_Flag",
+      "Temperature",
+      "Fuel_Price",
+      "CPI",
+      "Unemployment",
+      "weekofyear",
+      "month",
+      "year"
+    ]
+  },
+  "device": "cuda",
+  "device_details": {
+    "torch_cuda_available": true,
+    "cuda_device_name": "Tesla T4",
+    "cuda_device_count": 1,
+    "cuda_capability": [
+      7,
+      5
+    ]
+  },
+  "versions": {
+    "python": "3.11.11",
+    "platform": "Linux-5.10.245-245.983.amzn2.x86_64-x86_64-with-glibc2.35",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "torch": "2.6.0",
+    "torch_cuda": "12.6",
+    "scikit_learn": "1.7.2",
+    "statsmodels": "0.14.6",
+    "prophet": null
+  },
+  "timing_sec": {
+    "val_fit_predict": 0.1482994556427002,
+    "test_fit_predict": 0.3360438346862793
+  }
+}
