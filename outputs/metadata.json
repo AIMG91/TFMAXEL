@@ -3,10 +3,10 @@
   "seed": 42,
   "split": {
     "train_start": "2010-02-05",
-    "train_end": "2012-07-06",
-    "val_start": "2012-07-13",
-    "val_end": "2012-08-31",
-    "test_start": "2012-09-07",
+    "train_end": "2011-12-02",
+    "val_start": "2011-12-09",
+    "val_end": "2012-01-27",
+    "test_start": "2012-02-03",
     "test_end": "2012-10-26"
   },
   "features": [
@@ -39,6 +39,6 @@
   "notes": {
     "oracle_exog_assumption": "All exogenous covariates are assumed available over the forecast horizon (oracle scenario).",
     "val_weeks": "8",
-    "test_weeks": "8"
+    "test_weeks": "39"
   }
 }

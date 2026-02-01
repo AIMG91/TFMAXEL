@@ -7,7 +7,7 @@ from typing import Dict, Iterable, List, Tuple
 import numpy as np
 import pandas as pd
 
-from src.common import compute_metrics, make_features, temporal_split_by_date
+from src.common import evaluate_predictions, get_E2_test_mask, make_features, temporal_split_by_date
 
 
 def _ensure_dirs(base_dir: Path, exp_id: str) -> Dict[str, Path]:
@@ -22,20 +22,12 @@ def _ensure_dirs(base_dir: Path, exp_id: str) -> Dict[str, Path]:
 
 
 def _compute_metrics_frames(pred_df: pd.DataFrame, model_name: str, group: str | None = None) -> Tuple[pd.DataFrame, pd.DataFrame]:
-    global_metrics = compute_metrics(pred_df["y_true"].values, pred_df["y_pred"].values)
-    global_row = {"model": model_name, **global_metrics}
-    if group is not None:
-        global_row["group"] = group
-    metrics_global_df = pd.DataFrame([global_row])
-
-    by_store_rows = []
-    for store, g in pred_df.groupby("Store"):
-        m = compute_metrics(g["y_true"].values, g["y_pred"].values)
-        row = {"model": model_name, "Store": int(store), **m}
-        if group is not None:
-            row["group"] = group
-        by_store_rows.append(row)
-    metrics_by_store_df = pd.DataFrame(by_store_rows).sort_values("Store")
+    metrics_global_df, metrics_by_store_df, _ = evaluate_predictions(
+        pred_df,
+        group_keys=["Store"],
+        model_name=model_name,
+        group_label=group,
+    )
     return metrics_global_df, metrics_by_store_df
 
 
@@ -168,8 +160,10 @@ def run_E2_last_39_weeks(models: Iterable, df: pd.DataFrame, config: Dict) -> Di
     base_dir = Path(config.get("output_dir", "outputs"))
     exp_dirs = _ensure_dirs(base_dir, exp_id)
 
-    train_df, test_df, split_info = temporal_split_by_date(df, test_weeks=config["test_weeks"])
-    test_dates = sorted(test_df["Date"].unique())
+    test_mask, split_info = get_E2_test_mask(df, test_weeks=config["test_weeks"])
+    test_df = df.loc[test_mask].copy()
+    train_df = df.loc[~test_mask].copy()
+    test_dates = sorted(pd.to_datetime(test_df["Date"]).unique())
 
     for model in models:
         model_name = model.name
@@ -406,6 +400,7 @@ def collect_summary_metrics(output_dir: str | Path) -> pd.DataFrame:
                 "MAE": row.get("MAE"),
                 "RMSE": row.get("RMSE"),
                 "sMAPE": row.get("sMAPE"),
+                "WAPE": row.get("WAPE"),
                 "notes": row.get("group", ""),
             }
             rows.append(record)

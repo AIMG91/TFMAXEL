@@ -64,12 +64,41 @@ Una cuestión clave es separar el aporte de:
 	\item \textbf{Calendario} (conocido a futuro), y
 	\item \textbf{Exógenas observadas} (no garantizadas a futuro sin hipótesis adicional).
 \end{itemize}
-\noindent [COMPLETAR: tabla/figura de ablación con 3 condiciones: (i) solo lags, (ii) lags+calendario, (iii) lags+calendario+exógenas; reportar MAE/RMSE/sMAPE global y por tienda.]
+
+En esta ablación se comparan tres conjuntos de variables: FS0 (solo \emph{lags}), FS1 (\emph{lags}+calendario) y FS2 (\emph{lags}+calendario+exógenas). Los resultados globales (ventana E2, 45 tiendas, 1\,755 puntos) se resumen en la Tabla~\ref{tab:e0-ablacion-global}.
+
+\input{tablas/tabla_e0_ablacion_global.tex}
+
+\noindent De forma agregada, el efecto es heterogéneo: (i) en \texttt{lstm\_exog}, FS1 empeora, mientras que FS2 logra una mejora moderada frente a FS0 (MAE $\downarrow$ de $498{,}8\,\text{k}$ a $484{,}7\,\text{k}$); (ii) en \texttt{transformer\_exog}, FS1 también degrada, y FS2 sólo recupera parcialmente pero queda por debajo de FS0 (MAE $330{,}9\,\text{k}$ en FS0 vs. $433{,}9\,\text{k}$ en FS2).
+
+\noindent La Figura~\ref{fig:e0-ablacion-mae}--\ref{fig:e0-ablacion-smape} complementa esta comparación con una lectura visual de las métricas.
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figuras/e0_ablation_MAE.png}
+	\caption[Ablación E0: MAE global]{\textbf{Ablación E0: MAE global por conjunto de variables.} Menor es mejor.}
+	\label{fig:e0-ablacion-mae}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figuras/e0_ablation_RMSE.png}
+	\caption[Ablación E0: RMSE global]{\textbf{Ablación E0: RMSE global por conjunto de variables.} Menor es mejor.}
+	\label{fig:e0-ablacion-rmse}
+\end{figure}
+
+\begin{figure}[ht!]
+	\centering
+	\includegraphics[width=0.85\textwidth]{figuras/e0_ablation_sMAPE.png}
+	\caption[Ablación E0: sMAPE global]{\textbf{Ablación E0: sMAPE global por conjunto de variables.} Menor es mejor.}
+	\label{fig:e0-ablacion-smape}
+\end{figure}
 
 \section{Escenario realista vs. escenario \emph{oracle}}
 La hipótesis \emph{oracle} (exógenas conocidas en el horizonte) tiende a favorecer modelos con regresores ricos.
 En un despliegue realista, la comparación debe considerar o bien exógenas realmente conocidas (calendario, festivos), o bien el error compuesto de un pipeline que primero predice exógenas y después predice ventas.
-\noindent [COMPLETAR: experimento adicional con predicción de exógenas o con sustitución por "last observation carried forward" para exógenas no conocidas.]
+
+En la ablación E0, el conjunto FS2 (que incluye exógenas observadas) asume implícitamente un escenario \emph{oracle} para el horizonte de predicción. Por tanto, estos resultados deben interpretarse como una cota optimista del beneficio de las exógenas. Un análisis más realista requeriría (i) limitarse a covariables conocidas a futuro (FS1) o (ii) modelar explícitamente la incertidumbre de las exógenas mediante un submodelo o una estrategia de imputación/persistencia.
 
 \section{Heterogeneidad por tienda}
 Además de la métrica global, el análisis por tienda permite identificar:
@@ -78,4 +107,7 @@ Además de la métrica global, el análisis por tienda permite identificar:
 	\item tiendas con alta volatilidad o cambios de régimen,
 	\item casos donde un modelo simple puede ser competitivo.
 \end{itemize}
-\noindent [COMPLETAR: incluir percentiles (p50/p75/p90) de MAE por tienda y ejemplos de 2--3 tiendas representativas.]
+
+La Tabla~\ref{tab:e0-ablacion-por-tienda} resume la dispersión del \acrshort{mae} por tienda (percentiles sobre las 45 tiendas del holdout E2). Esta vista permite observar cómo el beneficio de añadir covariables puede concentrarse en ciertas tiendas y no necesariamente reflejarse de forma uniforme.
+
+\input{tablas/tabla_e0_ablacion_por_tienda.tex}

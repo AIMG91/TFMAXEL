@@ -168,7 +168,9 @@ class LSTMForecaster(BaseForecaster):
 
         if add_calendar:
             iso = pd.Timestamp(date).isocalendar()
-            feat["weekofyear"] = int(iso.week)
+            # pandas may return tuple or namedtuple depending on version
+            week_val = getattr(iso, "week", iso[1])
+            feat["weekofyear"] = int(week_val)
             feat["month"] = int(pd.Timestamp(date).month)
             feat["year"] = int(pd.Timestamp(date).year)
 

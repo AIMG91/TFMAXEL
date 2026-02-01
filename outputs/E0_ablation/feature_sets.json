@@ -14,8 +14,7 @@
       "roll_std_8",
       "roll_mean_12",
       "roll_std_12"
-    ],
-    "notes": "Target-history only: lags + rolling stats"
+    ]
   },
   "FS1": {
     "add_calendar": true,
@@ -35,8 +34,7 @@
       "weekofyear",
       "month",
       "year"
-    ],
-    "notes": "FS0 + calendar (weekofyear, month, year)"
+    ]
   },
   "FS2": {
     "add_calendar": true,
@@ -67,10 +65,6 @@
       "weekofyear",
       "month",
       "year"
-    ],
-    "notes": "FS1 + exogenous variables (oracle exog)"
-  },
-  "COMPLETAR": {
-    "oracle_exog_assumption": "[COMPLETAR: describe disponibilidad real de exógenas en deployment]"
+    ]
   }
 }

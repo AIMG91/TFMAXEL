@@ -32,6 +32,8 @@ EXOG_COLUMNS: Tuple[str, ...] = (
 
 DEFAULT_LAGS: Tuple[int, ...] = (1, 2, 4, 8, 52)
 DEFAULT_ROLLINGS: Tuple[int, ...] = (4, 8, 12)
+TRAIN_WEEKS: int = 104
+TEST_WEEKS: int = 39
 
 
 @dataclass(frozen=True)
@@ -95,7 +97,7 @@ def temporal_split(
     df: pd.DataFrame,
     *,
     val_weeks: int = 8,
-    test_weeks: int = 8,
+    test_weeks: int = TEST_WEEKS,
 ) -> Tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, SplitConfig]:
     """Global temporal split by unique weekly dates (same cutoffs for all stores).
 
@@ -243,8 +245,41 @@ def temporal_split_by_date(
     return train_df, test_df, split_info
 
 
+def get_E2_test_mask(
+    df: pd.DataFrame,
+    *,
+    test_weeks: int = TEST_WEEKS,
+    test_start: Optional[pd.Timestamp] = None,
+    test_end: Optional[pd.Timestamp] = None,
+    store_ids: Optional[Sequence[int]] = None,
+) -> Tuple[pd.Series, Dict[str, str]]:
+    """Return a boolean mask for the E2 test window.
+
+    Ensures a single, reusable definition of the E2 evaluation subset
+    (same dates and stores) to keep experiments comparable.
+    """
+
+    dates = pd.to_datetime(df["Date"])
+    if store_ids is None:
+        store_ids = df["Store"].unique().tolist()
+
+    # Reuse the same date logic used by E2
+    _, _, split_info = temporal_split_by_date(
+        df.assign(Date=dates),
+        test_weeks=test_weeks,
+        test_start=test_start,
+        test_end=test_end,
+    )
+
+    test_start_ts = pd.Timestamp(split_info["test_start"])
+    test_end_ts = pd.Timestamp(split_info["test_end"])
+
+    mask = (dates >= test_start_ts) & (dates <= test_end_ts) & df["Store"].isin(store_ids)
+    return mask, split_info
+
+
 def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
-    """Compute MAE, RMSE, sMAPE."""
+    """Compute MAE, RMSE, sMAPE, WAPE."""
 
     y_true = np.asarray(y_true, dtype=float)
     y_pred = np.asarray(y_pred, dtype=float)
@@ -257,7 +292,133 @@ def compute_metrics(y_true: np.ndarray, y_pred: np.ndarray) -> Dict[str, float]:
     smape = np.where(denom == 0, 0.0, 200.0 * np.abs(y_true - y_pred) / denom)
     smape = float(np.mean(smape))
 
-    return {"MAE": mae, "RMSE": rmse, "sMAPE": smape}
+    denom_wape = float(np.sum(np.abs(y_true)))
+    wape = float(np.sum(np.abs(y_true - y_pred)) / denom_wape) if denom_wape != 0 else float("nan")
+
+    return {"MAE": mae, "RMSE": rmse, "sMAPE": smape, "WAPE": wape}
+
+
+def evaluate_predictions(
+    pred_df: pd.DataFrame,
+    *,
+    y_true_col: str = "y_true",
+    y_pred_col: str = "y_pred",
+    group_keys: Optional[Sequence[str]] = None,
+    aggregation: str = "mean",
+    model_name: Optional[str] = None,
+    feature_set: Optional[str] = None,
+    group_label: Optional[str] = None,
+    report_path: Optional[str | os.PathLike] = None,
+) -> Tuple[pd.DataFrame, pd.DataFrame, Dict[str, object]]:
+    """Evaluate predictions with a unified definition of MAE/RMSE/sMAPE.
+
+    - aggregation: currently only "mean" (macro-average) is supported.
+    - group_keys: if provided (e.g., ["Store"]) compute per-group metrics.
+    - report_path: if provided, writes a JSON debug report with shapes/stats.
+    - Returns (metrics_global_df, metrics_by_group_df, debug_payload).
+    """
+
+    if aggregation != "mean":
+        raise ValueError(f"Unsupported aggregation: {aggregation}")
+
+    if y_true_col not in pred_df.columns or y_pred_col not in pred_df.columns:
+        missing = [c for c in (y_true_col, y_pred_col) if c not in pred_df.columns]
+        raise ValueError(f"Missing required columns in pred_df: {missing}")
+
+    y_true = np.asarray(pred_df[y_true_col], dtype=float)
+    y_pred = np.asarray(pred_df[y_pred_col], dtype=float)
+
+    global_metrics = compute_metrics(y_true, y_pred)
+    global_row: Dict[str, object] = {
+        "MAE": global_metrics["MAE"],
+        "RMSE": global_metrics["RMSE"],
+        "sMAPE": global_metrics["sMAPE"],
+        "WAPE": global_metrics["WAPE"],
+    }
+    if model_name:
+        global_row["model"] = model_name
+    if feature_set:
+        global_row["feature_set"] = feature_set
+    if group_label:
+        global_row["group"] = group_label
+    metrics_global_df = pd.DataFrame([global_row])
+
+    by_group_rows: List[Dict[str, object]] = []
+    if group_keys:
+        for keys, g in pred_df.groupby(list(group_keys)):
+            g_true = g[y_true_col].astype(float).values
+            g_pred = g[y_pred_col].astype(float).values
+            m = compute_metrics(g_true, g_pred)
+
+            row: Dict[str, object] = {
+                "MAE": m["MAE"],
+                "RMSE": m["RMSE"],
+                "sMAPE": m["sMAPE"],
+                "WAPE": m["WAPE"],
+            }
+
+            if isinstance(keys, tuple):
+                for k, v in zip(group_keys, keys):
+                    row[k] = v
+            else:
+                row[group_keys[0]] = keys
+
+            if model_name:
+                row["model"] = model_name
+            if feature_set:
+                row["feature_set"] = feature_set
+            if group_label:
+                row["group"] = group_label
+
+            by_group_rows.append(row)
+
+    metrics_by_group_df = pd.DataFrame(by_group_rows) if by_group_rows else pd.DataFrame()
+    if not metrics_by_group_df.empty and any(k in metrics_by_group_df.columns for k in ("Store", "Store_id")):
+        sort_key = "Store" if "Store" in metrics_by_group_df.columns else "Store_id"
+        metrics_by_group_df = metrics_by_group_df.sort_values(sort_key)
+
+    debug_payload: Dict[str, object] = {
+        "aggregation": aggregation,
+        "y_true_col": y_true_col,
+        "y_pred_col": y_pred_col,
+        "n_points": int(len(pred_df)),
+        "shape": list(pred_df.shape),
+        "wape": global_metrics["WAPE"],
+        "y_true_stats": {
+            "min": float(np.nanmin(y_true)) if len(y_true) else None,
+            "mean": float(np.nanmean(y_true)) if len(y_true) else None,
+            "max": float(np.nanmax(y_true)) if len(y_true) else None,
+        },
+        "y_pred_stats": {
+            "min": float(np.nanmin(y_pred)) if len(y_pred) else None,
+            "mean": float(np.nanmean(y_pred)) if len(y_pred) else None,
+            "max": float(np.nanmax(y_pred)) if len(y_pred) else None,
+        },
+    }
+
+    if "Date" in pred_df.columns:
+        try:
+            dates = pd.to_datetime(pred_df["Date"])
+            debug_payload["date_range"] = {
+                "min": pd.Timestamp(dates.min()).strftime("%Y-%m-%d"),
+                "max": pd.Timestamp(dates.max()).strftime("%Y-%m-%d"),
+            }
+        except Exception:
+            debug_payload["date_range"] = None
+
+    if model_name:
+        debug_payload["model"] = model_name
+    if feature_set:
+        debug_payload["feature_set"] = feature_set
+    if group_label:
+        debug_payload["group"] = group_label
+
+    if report_path:
+        report_path = Path(report_path)
+        report_path.parent.mkdir(parents=True, exist_ok=True)
+        report_path.write_text(json.dumps(debug_payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+    return metrics_global_df, metrics_by_group_df, debug_payload
 
 
 def save_outputs(
@@ -317,3 +478,69 @@ def write_metadata(
     metadata_path = Path(metadata_path)
     metadata_path.parent.mkdir(parents=True, exist_ok=True)
     metadata_path.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
+
+
+def validate_split_consistency(
+    outputs_dir: str | os.PathLike,
+    *,
+    test_weeks: int = TEST_WEEKS,
+) -> Dict[str, object]:
+    """Validate that outputs/metadata.json and predictions align with test_weeks.
+
+    - Checks metadata.json split contains the expected test window length.
+    - Checks test_predictions.csv files have exactly test_weeks unique dates per store.
+    Returns a summary dict with status and any issues found.
+    """
+
+    outputs_dir = Path(outputs_dir)
+    metadata_path = outputs_dir / "metadata.json"
+    issues: List[str] = []
+
+    metadata: Dict[str, object] = {}
+    if metadata_path.exists():
+        metadata = json.loads(metadata_path.read_text(encoding="utf-8"))
+        split = metadata.get("split") or {}
+        test_start = split.get("test_start")
+        test_end = split.get("test_end")
+        if test_start and test_end:
+            dates = pd.date_range(test_start, test_end, freq="W-FRI")
+            if len(dates) != test_weeks:
+                issues.append(
+                    f"metadata.json test_weeks mismatch: expected {test_weeks}, got {len(dates)}"
+                )
+        else:
+            issues.append("metadata.json missing split.test_start/test_end")
+    else:
+        issues.append("metadata.json not found")
+
+    pred_files = list(outputs_dir.glob("**/predictions/test_predictions.csv"))
+    if not pred_files:
+        issues.append("No test_predictions.csv files found under outputs_dir")
+    else:
+        for pred_path in pred_files:
+            pred_df = pd.read_csv(pred_path)
+            if "Date" not in pred_df.columns:
+                issues.append(f"Missing Date column in {pred_path}")
+                continue
+            pred_df["Date"] = pd.to_datetime(pred_df["Date"])
+            unique_dates = pred_df["Date"].dropna().unique()
+            if len(unique_dates) != test_weeks:
+                issues.append(
+                    f"{pred_path}: expected {test_weeks} unique dates, got {len(unique_dates)}"
+                )
+            if "Store" in pred_df.columns:
+                per_store = pred_df.groupby("Store")["Date"].nunique()
+                bad = per_store[per_store != test_weeks]
+                if not bad.empty:
+                    issues.append(
+                        f"{pred_path}: stores with != {test_weeks} dates: {sorted(bad.index.tolist())[:5]}"
+                    )
+
+    return {
+        "outputs_dir": str(outputs_dir),
+        "test_weeks": int(test_weeks),
+        "metadata_path": str(metadata_path),
+        "n_prediction_files": len(pred_files),
+        "issues": issues,
+        "ok": len(issues) == 0,
+    }

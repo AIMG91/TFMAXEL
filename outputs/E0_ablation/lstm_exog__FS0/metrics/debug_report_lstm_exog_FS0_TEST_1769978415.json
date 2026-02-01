@@ -1,0 +1,27 @@
+{
+  "aggregation": "mean",
+  "y_true_col": "y_true",
+  "y_pred_col": "y_pred",
+  "n_points": 1755,
+  "shape": [
+    1755,
+    4
+  ],
+  "y_true_stats": {
+    "min": 237129.81,
+    "mean": 1043440.6767464387,
+    "max": 2565259.92
+  },
+  "y_pred_stats": {
+    "min": 272062.035548953,
+    "mean": 546538.1685423016,
+    "max": 1668406.4490537
+  },
+  "date_range": {
+    "min": "2012-02-03",
+    "max": "2012-10-26"
+  },
+  "model": "lstm_exog",
+  "feature_set": "FS0",
+  "group": "TEST"
+}

@@ -1,0 +1,18 @@
+\begin{table}[ht!]
+\centering
+\caption[Ablación E0: percentiles por tienda]{\textbf{Ablación E0 (distribución del MAE por tienda).} Percentiles del \acrshort{mae} (p50/p75/p90) calculados sobre las 45 tiendas del conjunto de test. Menor es mejor.}
+\label{tab:e0-ablacion-por-tienda}
+\small
+\begin{tabular}{llrlll}
+\toprule
+Modelo & FS & $n$ tiendas & $p50$ MAE & $p75$ MAE & $p90$ MAE\\
+\midrule
+lstm\_exog & FS0 & 45 & 553\,007 & 698\,648 & 813\,999\\
+lstm\_exog & FS1 & 45 & 757\,800 & 1\,014\,507 & 1\,120\,013\\
+lstm\_exog & FS2 & 45 & 523\,141 & 748\,119 & 822\,172\\
+transformer\_exog & FS0 & 45 & 396\,475 & 432\,771 & 509\,918\\
+transformer\_exog & FS1 & 45 & 547\,618 & 736\,185 & 834\,619\\
+transformer\_exog & FS2 & 45 & 518\,800 & 632\,329 & 690\,790\\
+\bottomrule
+\end{tabular}
+\end{table}

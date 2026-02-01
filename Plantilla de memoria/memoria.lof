@@ -10,10 +10,13 @@
 \contentsline {figure}{\numberline {8.1}{\ignorespaces Comparación global de métricas}}{22}{figure.8.1}%
 \contentsline {figure}{\numberline {8.2}{\ignorespaces Top 10 modelos por MAE}}{22}{figure.8.2}%
 \contentsline {figure}{\numberline {8.3}{\ignorespaces Top 5 comparaci\'on normalizada}}{23}{figure.8.3}%
+\contentsline {figure}{\numberline {8.4}{\ignorespaces Ablación E0: MAE global}}{25}{figure.8.4}%
+\contentsline {figure}{\numberline {8.5}{\ignorespaces Ablación E0: RMSE global}}{25}{figure.8.5}%
+\contentsline {figure}{\numberline {8.6}{\ignorespaces Ablación E0: sMAPE global}}{25}{figure.8.6}%
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
 \addvspace {10\p@ }
-\contentsline {figure}{\numberline {B.1}{\ignorespaces Distribución de errores (Transformer)}}{34}{figure.Alph2.1}%
-\contentsline {figure}{\numberline {B.2}{\ignorespaces Distribución de errores (DeepAR)}}{35}{figure.Alph2.2}%
+\contentsline {figure}{\numberline {B.1}{\ignorespaces Distribución de errores (Transformer)}}{36}{figure.Alph2.1}%
+\contentsline {figure}{\numberline {B.2}{\ignorespaces Distribución de errores (DeepAR)}}{37}{figure.Alph2.2}%

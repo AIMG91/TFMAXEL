@@ -1,0 +1,18 @@
+\begin{table}[ht!]
+\centering
+\caption[Ablación E0: métricas globales]{\textbf{Ablación E0 (métricas globales).} Comparación de conjuntos de variables: FS0 (solo \emph{lags}), FS1 (\emph{lags}+calendario) y FS2 (\emph{lags}+calendario+exógenas). Menor es mejor.}
+\label{tab:e0-ablacion-global}
+\small
+\begin{tabular}{llrrrr}
+\toprule
+model & feature\_set & MAE & RMSE & sMAPE & MAE\_store\_macro \\
+\midrule
+lstm\_exog & FS0 & 498\,804 & 615\,528 & 60.96 & 498\,804 \\
+lstm\_exog & FS1 & 715\,895 & 819\,447 & 109.52 & 715\,895 \\
+lstm\_exog & FS2 & 484\,668 & 596\,657 & 54.88 & 484\,668 \\
+transformer\_exog & FS0 & 330\,957 & 392\,481 & 36.76 & 330\,957 \\
+transformer\_exog & FS1 & 490\,951 & 577\,818 & 57.92 & 490\,951 \\
+transformer\_exog & FS2 & 433\,880 & 501\,105 & 51.62 & 433\,880 \\
+\bottomrule
+\end{tabular}
+\end{table}

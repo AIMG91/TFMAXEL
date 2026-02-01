@@ -16,12 +16,17 @@ Objetivo: predecir `Weekly_Sales` semanal por `Store` usando **únicamente model
 
 ## Notebooks
 
-- `00_Setup_and_Data_Audit.ipynb` – validación, EDA mínima, split temporal fijo, metadata
-- `01_SARIMAX_exog.ipynb`
-- `02_Prophet_regressors.ipynb`
-- `03_GluonTS_DeepAR_exog.ipynb`
-- `04_LSTM_global_exog.ipynb`
-- `05_Transformer_global_exog.ipynb`
+- `00_setup_and_gpu_check.ipynb`
+- `01_Setup_and_Data_Audit.ipynb` – validación, EDA mínima, split temporal fijo, metadata
+- `02_data_and_feature_sets.ipynb`
+- `03_SARIMAX_exog.ipynb`
+- `04_Prophet_regressors.ipynb`
+- `05_GluonTS_DeepAR_exog.ipynb`
+- `06_LSTM_global_exog.ipynb`
+- `07_Transformer_global_exog.ipynb`
+- `08_run_E0_ablation_training.ipynb`
+- `09_results_summary_and_plots.ipynb`
+- `10_Run_All_Experiments.ipynb`
 
 ## Protocolo común
 

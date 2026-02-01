@@ -1,0 +1,27 @@
+{
+  "aggregation": "mean",
+  "y_true_col": "y_true",
+  "y_pred_col": "y_pred",
+  "n_points": 360,
+  "shape": [
+    360,
+    4
+  ],
+  "y_true_stats": {
+    "min": 215359.21,
+    "mean": 1132172.27125,
+    "max": 3676388.98
+  },
+  "y_pred_stats": {
+    "min": 389401.72874783166,
+    "mean": 1313694.1249984698,
+    "max": 2422643.9675295106
+  },
+  "date_range": {
+    "min": "2011-12-09",
+    "max": "2012-01-27"
+  },
+  "model": "transformer_exog",
+  "feature_set": "FS2",
+  "group": "VAL"
+}

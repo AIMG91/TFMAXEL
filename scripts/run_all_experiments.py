@@ -50,7 +50,7 @@ def main() -> int:
     if str(project_root) not in sys.path:
         sys.path.insert(0, str(project_root))
 
-    from src.common import load_data, make_features
+    from src.common import TEST_WEEKS, load_data, make_features, validate_split_consistency
     from src.experiments import (
         collect_summary_metrics,
         run_E1_walk_forward,
@@ -80,7 +80,7 @@ def main() -> int:
         "exog_cols": ["Holiday_Flag", "Temperature", "Fuel_Price", "CPI", "Unemployment"],
         "add_calendar": True,
         "lookback": args.lookback,
-        "test_weeks": args.test_weeks,
+        "test_weeks": args.test_weeks if args.test_weeks is not None else TEST_WEEKS,
         "output_dir": str(output_dir),
         "epochs": args.epochs,
         "batch_size": args.batch_size,
@@ -124,6 +124,11 @@ def main() -> int:
     summary.to_csv(summary_path, index=False)
 
     print(f"Wrote summary: {summary_path}")
+    validation = validate_split_consistency(output_dir, test_weeks=config["test_weeks"])
+    print(f"Split validation: {validation}")
+    if not validation["ok"]:
+        print("Split validation failed:", validation["issues"])
+        return 1
     return 0
 
 

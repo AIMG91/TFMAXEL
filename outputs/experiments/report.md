@@ -55,7 +55,7 @@ Este resumen consolida los resultados generados en `outputs/metrics` y el CSV co
 - Figuras: outputs/figures/
 
 ## Cómo generar/actualizar
-1) Ejecutar en el notebook 09_Run_All_Experiments.ipynb:
+1) Ejecutar en el notebook 10_Run_All_Experiments.ipynb:
    - Celda de “Resumen de métricas” (genera summary_metrics.csv desde outputs/metrics)
    - O la celda de agregación con `load(...)` si prefieres rehacer desde CSV locales.
 2) Asegurar que `outputs/metrics` está presente en el entorno (SageMaker/local) antes de generar.
