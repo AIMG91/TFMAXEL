@@ -53,24 +53,24 @@
   },
   "device": "cpu",
   "device_details": {
-    "torch_cuda_available": false,
+    "torch_cuda_available": true,
     "requested": "cpu"
   },
   "versions": {
-    "python": "3.8.10",
-    "platform": "Windows-10-10.0.26100-SP0",
-    "numpy": "1.24.4",
-    "pandas": "2.0.3",
-    "torch": "2.4.1+cpu",
-    "torch_cuda": null,
-    "scikit_learn": "1.3.2",
-    "statsmodels": "0.14.1",
-    "prophet": "1.2.2"
+    "python": "3.11.11",
+    "platform": "Linux-5.10.245-245.983.amzn2.x86_64-x86_64-with-glibc2.35",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3",
+    "torch": "2.6.0",
+    "torch_cuda": "12.6",
+    "scikit_learn": "1.7.2",
+    "statsmodels": "0.14.6",
+    "prophet": null
   },
   "timing_sec": {
-    "val_fit_predict": 4.4095330238342285,
-    "test_fit_predict": 8.00650405883789,
-    "runtime_sec": 12.554379940032959
+    "val_fit_predict": 3.759796619415283,
+    "test_fit_predict": 2.8047707080841064,
+    "runtime_sec": 6.618345499038696
   },
   "eval_mask_common_n": 1755
 }
