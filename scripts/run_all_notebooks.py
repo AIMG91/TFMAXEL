@@ -3,8 +3,11 @@ from __future__ import annotations
 import argparse
 import os
 import sys
+import traceback
 from pathlib import Path
+from datetime import datetime, timezone
 from typing import List
+import json
 
 
 def _project_root() -> Path:
@@ -100,6 +103,18 @@ def main() -> int:
     )
     parser.add_argument("--output-dir", type=str, default=None, help="Output folder for executed notebooks")
     parser.add_argument("--continue-on-error", action="store_true", help="Continue even if a notebook fails")
+    parser.add_argument(
+        "--start-from",
+        type=str,
+        default=None,
+        help="Start execution from this notebook filename (e.g., 06_LSTM_global_exog.ipynb)",
+    )
+    parser.add_argument(
+        "--only",
+        action="append",
+        default=None,
+        help="Run only the given notebook filename (can be passed multiple times)",
+    )
     args = parser.parse_args()
 
     kernel_name = _resolve_kernel_name(args.kernel)
@@ -161,7 +176,36 @@ def main() -> int:
     out_dir = Path(args.output_dir) if args.output_dir else (root / "outputs" / "notebook_runs")
     out_dir.mkdir(parents=True, exist_ok=True)
 
+    run_summary_path = out_dir / "_run_summary.json"
+    summary = {
+        "started_at": datetime.now(timezone.utc).isoformat(),
+        "kernel_requested": args.kernel,
+        "kernel_resolved": kernel_name,
+        "exec_cwd": str(exec_cwd),
+        "output_dir": str(out_dir),
+        "notebooks": [],
+    }
+
     notebooks = _notebook_list(root)
+
+    if args.only:
+        only_set = {n.strip() for n in args.only if n and n.strip()}
+        notebooks = [nb for nb in notebooks if nb.name in only_set]
+
+    if args.start_from:
+        start_name = args.start_from.strip()
+        if start_name:
+            try:
+                start_idx = [nb.name for nb in notebooks].index(start_name)
+                notebooks = notebooks[start_idx:]
+            except ValueError:
+                print(f"--start-from notebook not found in list: {start_name}", file=sys.stderr)
+                print("Available notebooks:", file=sys.stderr)
+                for nb in notebooks:
+                    print(f"- {nb.name}", file=sys.stderr)
+                return 2
+
+    failures: list[dict] = []
     for nb in notebooks:
         if not nb.exists():
             print(f"Missing notebook: {nb}", file=sys.stderr)
@@ -171,12 +215,58 @@ def main() -> int:
 
         out_path = out_dir / nb.name
         print(f"Running: {nb} -> {out_path}")
+        nb_rec = {
+            "notebook": str(nb),
+            "output": str(out_path),
+            "status": "running",
+            "started_at": datetime.now(timezone.utc).isoformat(),
+            "error": None,
+        }
         try:
             run_notebook(nb, out_path)
+            nb_rec["status"] = "ok"
         except Exception as exc:
+            nb_rec["status"] = "failed"
+            nb_rec["error"] = f"{type(exc).__name__}: {exc}"
+            failures.append(nb_rec)
+
             print(f"Failed: {nb} ({exc})", file=sys.stderr)
+            traceback.print_exc()
+
+            # Write an updated summary eagerly so the last failure is persisted.
+            try:
+                summary["notebooks"].append(nb_rec)
+                summary["failures"] = failures
+                summary["updated_at"] = datetime.now(timezone.utc).isoformat()
+                run_summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+            except Exception:
+                pass
+
             if not args.continue_on_error:
+                summary["notebooks"].append(nb_rec)
+                summary["failures"] = failures
+                summary["finished_at"] = datetime.now(timezone.utc).isoformat()
+                try:
+                    run_summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+                except Exception:
+                    pass
                 return 1
+
+        summary["notebooks"].append(nb_rec)
+
+    summary["failures"] = failures
+    summary["finished_at"] = datetime.now(timezone.utc).isoformat()
+    try:
+        run_summary_path.write_text(json.dumps(summary, indent=2), encoding="utf-8")
+    except Exception:
+        pass
+
+    if failures:
+        print("Done with failures:", file=sys.stderr)
+        for f in failures:
+            print(f"- {Path(f['notebook']).name}: {f['error']}", file=sys.stderr)
+        print(f"Summary written to: {run_summary_path}", file=sys.stderr)
+        return 1
 
     print(f"Done. Outputs in: {out_dir}")
     return 0
