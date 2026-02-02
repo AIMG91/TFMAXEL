@@ -107,7 +107,11 @@ def main() -> int:
     def run_notebook(nb_path: Path, out_path: Path) -> None:
         try:
             import papermill as pm
+        except Exception as import_exc:
+            pm = None
+            print(f"Papermill not available ({import_exc}); falling back to nbclient.")
 
+        if pm is not None:
             print("Executor: papermill")
 
             pm_kwargs = {
@@ -117,10 +121,9 @@ def main() -> int:
             if kernel_name:
                 pm_kwargs["kernel_name"] = kernel_name
 
+            # If the notebook fails, propagate the real notebook error.
             pm.execute_notebook(str(nb_path), str(out_path), **pm_kwargs)
             return
-        except Exception as exc:
-            print(f"Papermill unavailable or failed ({exc}); falling back to nbclient.")
 
         try:
             import nbformat
@@ -147,11 +150,7 @@ def main() -> int:
 
             nbformat.write(nb, str(out_path))
         except Exception as exc2:
-            print(
-                "Neither papermill nor nbclient execution succeeded. "
-                "Install papermill with: pip install papermill",
-                file=sys.stderr,
-            )
+            print("Notebook execution failed using nbclient.", file=sys.stderr)
             print(f"Execution error: {exc2}", file=sys.stderr)
             raise
 
